@@ -31,7 +31,13 @@ export async function connectDB() {
         );
 
         const options = {
-            serverSelectionTimeoutMS: 10000, // 10 seconds
+            serverSelectionTimeoutMS: 30000, // 30 seconds
+            socketTimeoutMS: 45000, // 45 seconds
+            maxPoolSize: 10,
+            minPoolSize: 2,
+            retryWrites: true,
+            retryReads: true,
+            family: 4, // Force IPv4, skip IPv6 DNS issues
         };
 
         cached.promise = mongoose.connect(MONGODB_URI, options);
