@@ -39,9 +39,12 @@ export default async function FeaturedCourses() {
                                 {/* Image Container - Smaller Height */}
                                 <div className="relative overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300 h-40">
                                     <img
-                                        src={course.thumbnail}
+                                        src={course.thumbnail || "/images/course-placeholder.svg"}
                                         alt={course.title}
                                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-400"
+                                        onError={(e) => {
+                                            e.target.src = "/images/course-placeholder.svg";
+                                        }}
                                     />
                                     {/* Level Badge */}
                                     <div className="absolute top-2 right-2">
