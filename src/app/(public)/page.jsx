@@ -10,6 +10,8 @@ import FeaturedCourses from "../components/home/FeaturedCourses";
 import FeaturedTeachers from "../components/home/FeaturedTeachers";
 import FAQSection from "../components/home/FAQSection";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Home",
   description:
