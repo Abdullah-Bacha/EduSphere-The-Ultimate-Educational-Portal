@@ -510,7 +510,7 @@ body {
 }
 
 /* ─────────────────────────────────────────────
-   TOAST NOTIFICATIONS
+   ANIMATIONS
 ───────────────────────────────────────────── */
 @keyframes fadeIn {
   from {
@@ -520,5 +520,14 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
   }
 }

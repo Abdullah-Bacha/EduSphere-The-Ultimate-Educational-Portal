@@ -93,45 +93,69 @@ export default async function HeroSection() {
                             />
 
                             {/* Floating Stat Card - Top Center Left */}
-                            <div className="absolute top-12 left-1/4 bg-white rounded-lg shadow-lg px-4 py-3 z-10 animate-bounce" style={{ animationDelay: '0s' }}>
+                            <div
+                                className="absolute top-8 left-12 bg-white rounded-xl shadow-md px-4 py-3 z-10 w-max"
+                                style={{
+                                    animation: 'float 3s ease-in-out infinite',
+                                    animationDelay: '0s'
+                                }}
+                            >
                                 <div className="flex items-center gap-2">
-                                    <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-xs">👥</div>
+                                    <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-xs font-bold">👥</div>
                                     <div>
-                                        <div className="text-sm font-bold text-black">50K+</div>
-                                        <div className="text-xs text-gray-500">Students</div>
+                                        <div className="text-sm font-bold text-gray-900">50K+</div>
+                                        <div className="text-xs text-gray-600">Students</div>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Floating Stat Card - Top Right */}
-                            <div className="absolute top-0 right-12 bg-white rounded-lg shadow-lg px-4 py-3 z-10 animate-bounce" style={{ animationDelay: '0.5s' }}>
+                            <div
+                                className="absolute top-0 right-0 bg-white rounded-xl shadow-md px-4 py-3 z-10 w-max"
+                                style={{
+                                    animation: 'float 3s ease-in-out infinite',
+                                    animationDelay: '0.4s'
+                                }}
+                            >
                                 <div className="flex items-center gap-2">
-                                    <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 text-xs">📚</div>
+                                    <div className="w-6 h-6 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600 text-xs font-bold">📚</div>
                                     <div>
-                                        <div className="text-sm font-bold text-black">500+</div>
-                                        <div className="text-xs text-gray-500">Courses</div>
+                                        <div className="text-sm font-bold text-gray-900">500+</div>
+                                        <div className="text-xs text-gray-600">Courses</div>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Floating Stat Card - Middle Right */}
-                            <div className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-white rounded-lg shadow-lg px-4 py-3 z-10 animate-bounce" style={{ animationDelay: '0.2s' }}>
+                            <div
+                                className="absolute top-1/3 -right-8 bg-white rounded-xl shadow-md px-4 py-3 z-10 w-max"
+                                style={{
+                                    animation: 'float 3s ease-in-out infinite',
+                                    animationDelay: '0.2s'
+                                }}
+                            >
                                 <div className="flex items-center gap-2">
-                                    <div className="w-6 h-6 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 text-xs">⭐</div>
+                                    <div className="w-6 h-6 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 text-xs font-bold">⭐</div>
                                     <div>
-                                        <div className="text-sm font-bold text-black">4.9★</div>
-                                        <div className="text-xs text-gray-500">Learning</div>
+                                        <div className="text-sm font-bold text-gray-900">4.9★</div>
+                                        <div className="text-xs text-gray-600">Learning</div>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Floating Stat Card - Bottom Right */}
-                            <div className="absolute bottom-16 right-8 bg-white rounded-lg shadow-lg px-4 py-3 z-10 animate-bounce" style={{ animationDelay: '0.7s' }}>
+                            <div
+                                className="absolute -bottom-4 right-0 bg-white rounded-xl shadow-md px-4 py-3 z-10 w-max"
+                                style={{
+                                    animation: 'float 3s ease-in-out infinite',
+                                    animationDelay: '0.6s'
+                                }}
+                            >
                                 <div className="flex items-center gap-2">
-                                    <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center text-green-600 text-xs">📈</div>
+                                    <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 text-xs font-bold">📈</div>
                                     <div>
-                                        <div className="text-sm font-bold text-black">98%</div>
-                                        <div className="text-xs text-gray-500">Success Rate</div>
+                                        <div className="text-sm font-bold text-gray-900">98%</div>
+                                        <div className="text-xs text-gray-600">Success Rate</div>
                                     </div>
                                 </div>
                             </div>
