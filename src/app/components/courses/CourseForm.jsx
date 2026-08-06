@@ -274,17 +274,45 @@ export default function CourseForm({ course, mode = "create", categoryOptions = 
                 <div>
                     <Label>
                         <span className="inline-flex items-center gap-1.5">
-                            <ImageIcon size={14} /> Thumbnail URL
+                            <ImageIcon size={14} /> Thumbnail
                         </span>
                     </Label>
-                    <input
-                        type="text"
-                        name="thumbnail"
-                        placeholder="https://... (leave blank to use default placeholder)"
-                        value={formData.thumbnail ?? ""}
-                        onChange={handleChange}
-                        className={fieldClasses}
-                    />
+
+                    <div className="space-y-3">
+                        <div>
+                            <label className="mb-2 block text-xs font-medium text-gray-600">
+                                Select from available images
+                            </label>
+                            <select
+                                value={formData.thumbnail ?? ""}
+                                onChange={(e) => setFormData(prev => ({ ...prev, thumbnail: e.target.value }))}
+                                className={fieldClasses}
+                            >
+                                <option value="">-- Choose an image --</option>
+                                <option value="/images/abd.jpeg">Avatar (ABD)</option>
+                                <option value="/images/image 8.png">Image 8</option>
+                                <option value="/images/image 10.png">Image 10</option>
+                                <option value="/images/image 11.png">Image 11</option>
+                                <option value="/images/Student learning.png">Student Learning</option>
+                                <option value="/images/Students learning.png">Students Learning</option>
+                                <option value="">-- Custom URL --</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className="mb-2 block text-xs font-medium text-gray-600">
+                                Or enter custom URL
+                            </label>
+                            <input
+                                type="text"
+                                name="thumbnail"
+                                placeholder="https://... (leave blank to use default placeholder)"
+                                value={formData.thumbnail ?? ""}
+                                onChange={handleChange}
+                                className={fieldClasses}
+                            />
+                        </div>
+                    </div>
 
                     <div className="mt-3 h-36 w-full max-w-[220px] overflow-hidden rounded-lg border bg-gray-50">
                         {/* eslint-disable-next-line @next/next/no-img-element */}

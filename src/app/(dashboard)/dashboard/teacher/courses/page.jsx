@@ -7,6 +7,8 @@ import { Copy, Archive, ArchiveRestore, Eye, EyeOff } from "lucide-react";
 import { useToast } from "@/app/components/ui/ToastProvider";
 import { useConfirm } from "@/app/components/ui/ConfirmProvider";
 
+const DEFAULT_COURSE_THUMBNAIL = "/images/course-placeholder.svg";
+
 function TeacherCoursesContent() {
     const searchParams = useSearchParams();
     const { showToast } = useToast();
@@ -185,12 +187,15 @@ function TeacherCoursesContent() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {courses.map((course) => (
                             <div key={course._id} className="bg-white rounded-xl shadow-sm border overflow-hidden flex flex-col hover:shadow-md transition-shadow">
-                                <div className="relative h-40 bg-slate-100 shrink-0">
-                                    {course.thumbnail ? (
-                                        <img src={course.thumbnail} alt={course.title} className="object-cover w-full h-full" />
-                                    ) : (
-                                        <div className="flex items-center justify-center h-full text-slate-400">No Image</div>
-                                    )}
+                                <div className="relative h-40 bg-gradient-to-br from-slate-100 to-slate-200 shrink-0 overflow-hidden">
+                                    <img
+                                        src={course.thumbnail || DEFAULT_COURSE_THUMBNAIL}
+                                        alt={course.title}
+                                        className="object-cover w-full h-full"
+                                        onError={(e) => {
+                                            e.currentTarget.src = DEFAULT_COURSE_THUMBNAIL;
+                                        }}
+                                    />
                                     <div className="absolute top-3 right-3 bg-white px-2 py-1 text-xs font-semibold rounded text-blue-600 shadow">
                                         {course.category}
                                     </div>

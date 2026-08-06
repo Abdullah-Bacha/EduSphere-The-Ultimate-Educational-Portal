@@ -1,6 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { User as UserIcon, ImageIcon } from "lucide-react";
+
+const AVAILABLE_AVATARS = [
+    { name: "Avatar (ABD)", path: "/images/abd.jpeg" },
+    { name: "Image 8", path: "/images/image 8.png" },
+    { name: "Image 10", path: "/images/image 10.png" },
+    { name: "Image 11", path: "/images/image 11.png" },
+    { name: "Student Learning", path: "/images/Student learning.png" },
+    { name: "Students Learning", path: "/images/Students learning.png" },
+];
 
 export default function TeacherProfilePage() {
     const [formData, setFormData] = useState({
@@ -11,6 +21,7 @@ export default function TeacherProfilePage() {
         dateOfBirth: "",
         address: "",
         bio: "",
+        image: "",
     });
 
     const [passwordData, setPasswordData] = useState({
@@ -38,6 +49,7 @@ export default function TeacherProfilePage() {
                     dateOfBirth: user.dateOfBirth ? user.dateOfBirth.split("T")[0] : "",
                     address: user.address || "",
                     bio: user.bio || "",
+                    image: user.image || "",
                 });
             }
         } catch (err) {
@@ -141,6 +153,91 @@ export default function TeacherProfilePage() {
                     {message.text}
                 </div>
             )}
+
+            {/* Avatar Section */}
+            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100 space-y-6">
+                <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2">
+                    <UserIcon size={20} /> Profile Picture
+                </h2>
+
+                <div className="space-y-4">
+                    <div>
+                        <label className="block text-sm font-semibold text-slate-600 mb-3">
+                            Select Your Avatar
+                        </label>
+                        <select
+                            value={formData.image || ""}
+                            onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))}
+                            className="w-full border border-slate-200 rounded-lg px-4 py-2 bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        >
+                            <option value="">-- No Avatar --</option>
+                            {AVAILABLE_AVATARS.map((avatar) => (
+                                <option key={avatar.path} value={avatar.path}>
+                                    {avatar.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-semibold text-slate-600 mb-3">
+                            Or enter custom image URL
+                        </label>
+                        <input
+                            type="text"
+                            placeholder="https://example.com/photo.jpg"
+                            value={formData.image && formData.image.startsWith('http') ? formData.image : ''}
+                            onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))}
+                            className="w-full border border-slate-200 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        />
+                    </div>
+
+                    {/* Avatar Preview */}
+                    {formData.image && (
+                        <div className="flex items-center gap-6 pt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                            <div className="h-28 w-28 rounded-full overflow-hidden border-4 border-blue-300 bg-slate-100 flex items-center justify-center shrink-0">
+                                <img
+                                    src={formData.image}
+                                    alt="Avatar preview"
+                                    className="h-full w-full object-cover"
+                                    onError={(e) => {
+                                        e.currentTarget.parentElement.innerHTML = `
+                                            <div class="w-full h-full flex items-center justify-center bg-slate-100">
+                                                <div class="text-center">
+                                                    <svg class="w-8 h-8 mx-auto text-red-500 mb-1" fill="currentColor" viewBox="0 0 24 24">
+                                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                                                    </svg>
+                                                    <p class="text-xs text-red-600 font-medium">Failed to load</p>
+                                                </div>
+                                            </div>
+                                        `;
+                                    }}
+                                />
+                            </div>
+                            <div>
+                                <p className="text-sm text-slate-700 font-semibold mb-1">Preview:</p>
+                                <p className="text-xs text-slate-600">Your avatar will appear next to your name</p>
+                                <p className="text-xs text-slate-500 mt-2">
+                                    <span className="font-semibold">URL:</span> {formData.image}
+                                </p>
+                            </div>
+                        </div>
+                    )}
+                    {!formData.image && (
+                        <div className="flex items-center gap-6 pt-4 p-4 bg-slate-50 rounded-lg border border-slate-200">
+                            <div className="h-28 w-28 rounded-full bg-slate-100 flex items-center justify-center shrink-0 border-4 border-slate-200">
+                                <UserIcon size={48} className="text-slate-400" />
+                            </div>
+                            <div>
+                                <p className="text-sm text-slate-600">
+                                    <span className="font-semibold">No avatar selected</span>
+                                </p>
+                                <p className="text-xs text-slate-500 mt-1">Choose an avatar from the dropdown or enter a custom image URL</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* Profile Details Form */}

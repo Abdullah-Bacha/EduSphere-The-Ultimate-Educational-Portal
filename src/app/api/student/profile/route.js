@@ -35,7 +35,7 @@ export async function PUT(request) {
         const student = await requireStudent();
         const body = await request.json();
         
-        const { name, phone, gender, dateOfBirth, address, bio, currentPassword, newPassword } = body;
+        const { name, phone, gender, dateOfBirth, address, bio, image, currentPassword, newPassword } = body;
 
         await dbConnect();
 
@@ -74,6 +74,7 @@ export async function PUT(request) {
         if (dateOfBirth !== undefined) user.dateOfBirth = dateOfBirth;
         if (address !== undefined) user.address = address;
         if (bio !== undefined) user.bio = bio;
+        if (image !== undefined) user.image = image;
 
         await user.save();
 

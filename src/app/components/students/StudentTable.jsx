@@ -1,5 +1,8 @@
 "use client";
+import { User as UserIcon } from "lucide-react";
 import StudentActions from "./StudentActions";
+
+const DEFAULT_AVATAR = "/images/abd.jpeg";
 
 export default function StudentTable({
     students,
@@ -16,104 +19,125 @@ export default function StudentTable({
         students.every((s) => selectedSet.has(s._id));
 
     return (
-        <div className="w-full overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm">
+        <div className="w-full">
             {/* Table Header Controls */}
             <div className="px-6 py-5 bg-slate-50/95 border-b border-slate-200/70">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                        <h2 className="text-xl font-semibold text-slate-900">Student table</h2>
+                        <h2 className="text-xl font-semibold text-slate-900">Student Cards</h2>
                     </div>
-                    <p className="text-sm text-slate-500">
-                        Total records: <span className="font-semibold text-slate-900">{students.length}</span>
-                    </p>
+                    <div className="flex items-center gap-4">
+                        {selectable && (
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    checked={allVisibleSelected}
+                                    onChange={(e) => onToggleAll(e.target.checked)}
+                                    className="h-4 w-4 cursor-pointer rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                                    aria-label="Select all students on this page"
+                                />
+                                <span className="text-sm text-slate-600">Select All</span>
+                            </label>
+                        )}
+                        <p className="text-sm text-slate-500">
+                            Total records: <span className="font-semibold text-slate-900">{students.length}</span>
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            {/* Responsive Scroll Container */}
-            <div className="w-full overflow-x-auto">
-                <table className="w-full table-auto text-left border-collapse">
-                    <thead>
-                        <tr className="bg-slate-50/50 text-xs font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200/50">
-                            {selectable && (
-                                <th className="px-6 py-4 w-10">
+            {/* Card Grid Layout */}
+            {students.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+                    {students.map((student) => (
+                        <div
+                            key={student._id}
+                            className={`rounded-2xl shadow-sm border overflow-hidden hover:shadow-md transition-all flex flex-col ${
+                                selectedSet.has(student._id)
+                                    ? "border-blue-300 bg-blue-50/50"
+                                    : "border-slate-100 bg-white"
+                            }`}
+                        >
+                            {/* Avatar Section - Image at top, no centering padding */}
+                            <div className="h-48 bg-gradient-to-br from-purple-100 to-purple-50 overflow-hidden flex-shrink-0 relative">
+                                {selectable && (
                                     <input
                                         type="checkbox"
-                                        checked={allVisibleSelected}
-                                        onChange={(e) => onToggleAll(e.target.checked)}
-                                        className="h-4 w-4 cursor-pointer rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-                                        aria-label="Select all students on this page"
+                                        checked={selectedSet.has(student._id)}
+                                        onChange={() => onToggleRow(student._id)}
+                                        className="absolute top-3 left-3 h-4 w-4 cursor-pointer rounded border-slate-300 text-blue-600 focus:ring-blue-500 z-10"
+                                        aria-label={`Select ${student.name}`}
                                     />
-                                </th>
-                            )}
-                            <th className="px-6 py-4 whitespace-nowrap">Name</th>
-                            <th className="px-6 py-4 whitespace-nowrap">Email</th>
-                            <th className="px-6 py-4 whitespace-nowrap">Phone</th>
-                            <th className="px-6 py-4 whitespace-nowrap">Gender</th>
-                            <th className="px-6 py-4 whitespace-nowrap">Status</th>
-                            <th className="px-6 py-4 whitespace-nowrap text-center pr-8">Actions</th>
-                        </tr>
-                    </thead>
+                                )}
+                                {student.image ? (
+                                    <img
+                                        src={student.image}
+                                        alt={student.name}
+                                        className="h-full w-full object-cover"
+                                        style={{ objectPosition: "center top" }}
+                                        onError={(e) => {
+                                            e.currentTarget.src = DEFAULT_AVATAR;
+                                        }}
+                                    />
+                                ) : (
+                                    <img
+                                        src={DEFAULT_AVATAR}
+                                        alt="Default avatar"
+                                        className="h-full w-full object-cover"
+                                        style={{ objectPosition: "center top" }}
+                                    />
+                                )}
+                            </div>
 
-                    <tbody className="divide-y divide-slate-100 text-sm text-slate-700">
-                        {students.length > 0 ? (
-                            students.map((student) => (
-                                <tr
-                                    key={student._id}
-                                    className={`transition-colors ${
-                                        selectedSet.has(student._id)
-                                            ? "bg-blue-50/50"
-                                            : "hover:bg-slate-50/60"
-                                    }`}
-                                >
-                                    {selectable && (
-                                        <td className="px-6 py-4">
-                                            <input
-                                                type="checkbox"
-                                                checked={selectedSet.has(student._id)}
-                                                onChange={() => onToggleRow(student._id)}
-                                                className="h-4 w-4 cursor-pointer rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-                                                aria-label={`Select ${student.name}`}
-                                            />
-                                        </td>
-                                    )}
-                                    <td className="px-6 py-4 font-semibold text-slate-900 whitespace-nowrap">
-                                        {student.name}
-                                    </td>
-                                    <td className="px-6 py-4 text-slate-500 whitespace-nowrap">
-                                        {student.email}
-                                    </td>
-                                    <td className="px-6 py-4 text-slate-500 whitespace-nowrap">
-                                        {student.phone || "—"}
-                                    </td>
-                                    <td className="px-6 py-4 text-slate-500 whitespace-nowrap capitalize">
-                                        {student.gender || "—"}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <span className={`inline-flex items-center rounded-md px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${student.status === "Active"
-                                                ? "bg-emerald-50 text-emerald-700 ring-emerald-600/10"
-                                                : "bg-slate-50 text-slate-600 ring-slate-500/10"
-                                            }`}>
+                            {/* Content Section */}
+                            <div className="p-5 flex flex-col flex-grow">
+                                <h3 className="text-lg font-bold text-slate-900 mb-1">
+                                    {student.name}
+                                </h3>
+
+                                <p className="text-sm text-slate-600 mb-3 line-clamp-2">
+                                    {student.bio || "No bio added"}
+                                </p>
+
+                                <div className="space-y-2 text-xs text-slate-500 mb-4 flex-grow">
+                                    <div className="truncate">
+                                        <span className="font-semibold">Email:</span> {student.email}
+                                    </div>
+                                    <div>
+                                        <span className="font-semibold">Phone:</span> {student.phone || "—"}
+                                    </div>
+                                    <div>
+                                        <span className="font-semibold">Gender:</span> {student.gender || "—"}
+                                    </div>
+                                    <div>
+                                        <span
+                                            className={`inline-flex items-center rounded-md px-2.5 py-1 text-xs font-semibold ring-1 ring-inset mt-2 ${
+                                                student.status === "Active"
+                                                    ? "bg-emerald-50 text-emerald-700 ring-emerald-600/10"
+                                                    : "bg-slate-50 text-slate-600 ring-slate-500/10"
+                                            }`}
+                                        >
                                             {student.status || "Active"}
                                         </span>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-right pr-6">
-                                        <StudentActions
-                                            student={student}
-                                            onDelete={onDelete}
-                                        />
-                                    </td>
-                                </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan={selectable ? 7 : 6} className="px-6 py-12 text-center text-slate-400">
-                                    No students found
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-            </div>
+                                    </div>
+                                </div>
+
+                                {/* Actions */}
+                                <div className="border-t border-slate-100 pt-4">
+                                    <StudentActions
+                                        student={student}
+                                        onDelete={onDelete}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <div className="p-12 text-center text-slate-400">
+                    No students found
+                </div>
+            )}
         </div>
     );
 }

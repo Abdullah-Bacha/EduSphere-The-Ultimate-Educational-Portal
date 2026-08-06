@@ -2,8 +2,17 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { User, Mail, Lock, Phone, FileText, CheckCircle, Star } from "lucide-react";
+import { User, Mail, Lock, Phone, FileText, CheckCircle, Star, ImageIcon } from "lucide-react";
 import { useToast } from "@/app/components/ui/ToastProvider";
+
+const AVAILABLE_AVATARS = [
+    { name: "Avatar (ABD)", path: "/images/abd.jpeg" },
+    { name: "Image 8", path: "/images/image 8.png" },
+    { name: "Image 10", path: "/images/image 10.png" },
+    { name: "Image 11", path: "/images/image 11.png" },
+    { name: "Student Learning", path: "/images/Student learning.png" },
+    { name: "Students Learning", path: "/images/Students learning.png" },
+];
 
 const defaultValues = {
     name: "",
@@ -11,6 +20,7 @@ const defaultValues = {
     password: "",
     phone: "",
     bio: "",
+    image: "",
     status: "Active",
     isFeatured: false,
 };
@@ -202,6 +212,68 @@ export default function TeacherForm({ initialData = null, isEdit = false }) {
                         />
                     </div>
                 </div>
+
+                {/* Avatar Image */}
+                <div className="md:col-span-2">
+                    <label className="block mb-3 text-sm font-semibold text-slate-700 flex items-center gap-2">
+                        <ImageIcon size={16} /> Profile Picture (Avatar)
+                    </label>
+
+                    <div className="space-y-4 rounded-xl border border-slate-200 bg-slate-50/50 p-4">
+                        <div>
+                            <label className="block mb-2 text-xs font-medium text-slate-600">
+                                Select Avatar
+                            </label>
+                            <div className="relative group">
+                                <select
+                                    value={formData.image || ""}
+                                    onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))}
+                                    className="w-full pl-3 pr-10 rounded-xl border border-slate-200 bg-white p-2.5 text-sm text-black outline-none transition duration-200 hover:border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 appearance-none cursor-pointer"
+                                >
+                                    <option value="">-- No Avatar --</option>
+                                    {AVAILABLE_AVATARS.map((avatar) => (
+                                        <option key={avatar.path} value={avatar.path}>
+                                            {avatar.name}
+                                        </option>
+                                    ))}
+                                </select>
+                                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none border-l-4 border-r-4 border-t-4 border-transparent border-t-slate-400" />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className="block mb-2 text-xs font-medium text-slate-600">
+                                Or enter custom image URL
+                            </label>
+                            <input
+                                type="text"
+                                placeholder="https://example.com/photo.jpg"
+                                value={formData.image && formData.image.startsWith('http') ? formData.image : ''}
+                                onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))}
+                                className="w-full pl-3 pr-3 rounded-xl border border-slate-200 bg-white p-2.5 text-sm text-black outline-none transition duration-200 hover:border-slate-300 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/10 placeholder-slate-400"
+                            />
+                        </div>
+
+                        {/* Avatar Preview */}
+                        {formData.image && (
+                            <div className="pt-2 flex items-center gap-4">
+                                <div className="h-20 w-20 rounded-full overflow-hidden border-2 border-slate-300 bg-slate-200 flex items-center justify-center shrink-0">
+                                    <img
+                                        src={formData.image}
+                                        alt="Avatar preview"
+                                        className="h-full w-full object-cover"
+                                        onError={(e) => {
+                                            e.currentTarget.style.display = "none";
+                                        }}
+                                    />
+                                </div>
+                                <p className="text-xs text-slate-500">
+                                    <span className="font-semibold">Preview:</span> Avatar for this teacher
+                                </p>
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
 
             <div className="flex justify-end pt-2">
@@ -228,6 +300,7 @@ function getInitialValues(initialData) {
         password: "",
         phone: initialData.phone || "",
         bio: initialData.bio || "",
+        image: initialData.image || "",
         status: initialData.status || "Active",
         isFeatured: Boolean(initialData.isFeatured),
     };

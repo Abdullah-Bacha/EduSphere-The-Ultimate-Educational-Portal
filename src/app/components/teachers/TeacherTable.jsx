@@ -1,6 +1,9 @@
 "use client";
 
+import { User as UserIcon } from "lucide-react";
 import TeacherActions from "./TeacherActions";
+
+const DEFAULT_AVATAR = "/images/abd.jpeg";
 
 function formatDate(value) {
     if (!value) return "—";
@@ -11,46 +14,65 @@ function formatDate(value) {
 
 export default function TeacherTable({ teachers, onDelete }) {
     return (
-        <div className="w-full overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-sm">
+        <div className="w-full">
             <div className="px-6 py-5 bg-slate-50/95 border-b border-slate-200/70">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                    <h2 className="text-xl font-semibold text-slate-900">Teacher table</h2>
+                    <h2 className="text-xl font-semibold text-slate-900">Teacher Cards</h2>
                     <p className="text-sm text-slate-500">
                         Total records: <span className="font-semibold text-slate-900">{teachers.length}</span>
                     </p>
                 </div>
             </div>
 
-            <div className="w-full overflow-x-auto">
-                <table className="w-full table-auto text-left border-collapse">
-                    <thead>
-                        <tr className="bg-slate-50/50 text-xs font-bold uppercase tracking-wider text-slate-500 border-b border-slate-200/50">
-                            <th className="px-6 py-4 whitespace-nowrap">Name</th>
-                            <th className="px-6 py-4 whitespace-nowrap">Email</th>
-                            <th className="px-6 py-4 whitespace-nowrap">Phone</th>
-                            <th className="px-6 py-4 whitespace-nowrap">Status</th>
-                            {/* <th className="px-6 py-4 whitespace-nowrap">Featured</th> */}
-                            {/* <th className="px-6 py-4 whitespace-nowrap">Created</th> */}
-                            <th className="px-6 py-4 whitespace-nowrap text-center pr-8">Actions</th>
-                        </tr>
-                    </thead>
+            {teachers.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+                    {teachers.map((teacher) => (
+                        <div
+                            key={teacher._id}
+                            className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col"
+                        >
+                            {/* Avatar Section - Image at top, no centering padding */}
+                            <div className="h-48 bg-gradient-to-br from-blue-100 to-blue-50 overflow-hidden flex-shrink-0">
+                                {teacher.image ? (
+                                    <img
+                                        src={teacher.image}
+                                        alt={teacher.name}
+                                        className="h-full w-full object-cover"
+                                        style={{ objectPosition: "center top" }}
+                                        onError={(e) => {
+                                            e.currentTarget.src = DEFAULT_AVATAR;
+                                        }}
+                                    />
+                                ) : (
+                                    <img
+                                        src={DEFAULT_AVATAR}
+                                        alt="Default avatar"
+                                        className="h-full w-full object-cover"
+                                        style={{ objectPosition: "center top" }}
+                                    />
+                                )}
+                            </div>
 
-                    <tbody className="divide-y divide-slate-100 text-sm text-slate-700">
-                        {teachers.length > 0 ? (
-                            teachers.map((teacher) => (
-                                <tr key={teacher._id} className="hover:bg-slate-50/60 transition-colors">
-                                    <td className="px-6 py-4 font-semibold text-slate-900 whitespace-nowrap">
-                                        {teacher.name}
-                                    </td>
-                                    <td className="px-6 py-4 text-slate-500 whitespace-nowrap">
-                                        {teacher.email}
-                                    </td>
-                                    <td className="px-6 py-4 text-slate-500 whitespace-nowrap">
-                                        {teacher.phone || "—"}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
+                            {/* Content Section */}
+                            <div className="p-5 flex flex-col flex-grow">
+                                <h3 className="text-lg font-bold text-slate-900 mb-1">
+                                    {teacher.name}
+                                </h3>
+
+                                <p className="text-sm text-slate-600 mb-3">
+                                    {teacher.bio || "No bio added"}
+                                </p>
+
+                                <div className="space-y-2 text-xs text-slate-500 mb-4 flex-grow">
+                                    <div className="truncate">
+                                        <span className="font-semibold">Email:</span> {teacher.email}
+                                    </div>
+                                    <div>
+                                        <span className="font-semibold">Phone:</span> {teacher.phone || "—"}
+                                    </div>
+                                    <div>
                                         <span
-                                            className={`inline-flex items-center rounded-md px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${
+                                            className={`inline-flex items-center rounded-md px-2.5 py-1 text-xs font-semibold ring-1 ring-inset mt-2 ${
                                                 teacher.status === "Active"
                                                     ? "bg-emerald-50 text-emerald-700 ring-emerald-600/10"
                                                     : "bg-slate-50 text-slate-600 ring-slate-500/10"
@@ -58,38 +80,25 @@ export default function TeacherTable({ teachers, onDelete }) {
                                         >
                                             {teacher.status || "Active"}
                                         </span>
-                                    </td>
+                                    </div>
+                                </div>
 
-                                    {/* <td className="px-6 py-4 whitespace-nowrap">
-                                        {teacher.isFeatured ? (
-                                            <span className="inline-flex items-center rounded-md px-2.5 py-1 text-xs font-semibold bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/10">
-                                                Featured
-                                            </span>
-                                        ) : (
-                                            <span className="text-slate-400 text-xs">—</span>
-                                        )}
-                                    </td> */}
-                                    {/* <td className="px-6 py-4 text-slate-500 whitespace-nowrap">
-                                        {formatDate(teacher.createdAt)}
-                                    </td> */}
-                                    <td className="px-6 py-4 whitespace-nowrap text-right pr-6">
-                                        <TeacherActions
-                                            teacher={teacher}
-                                            onDelete={onDelete}
-                                        />
-                                    </td>
-                                </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan="7" className="px-6 py-12 text-center text-slate-400">
-                                    No teachers found
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-            </div>
+                                {/* Actions */}
+                                <div className="border-t border-slate-100 pt-4">
+                                    <TeacherActions
+                                        teacher={teacher}
+                                        onDelete={onDelete}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <div className="p-12 text-center text-slate-400">
+                    No teachers found
+                </div>
+            )}
         </div>
     );
 }

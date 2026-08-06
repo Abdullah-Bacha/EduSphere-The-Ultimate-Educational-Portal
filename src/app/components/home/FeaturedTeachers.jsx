@@ -37,23 +37,30 @@ export default async function FeaturedTeachers() {
                             <div className="h-full bg-[var(--surface)] rounded-[var(--radius-lg)] shadow-sm hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 border border-[var(--border)] overflow-hidden flex flex-col">
 
                                 {/* Image Container */}
-                                <div className="relative h-48 bg-gradient-to-br from-blue-100 to-indigo-100 overflow-hidden flex items-center justify-center">
+                                <div className="relative h-56 bg-gradient-to-br from-blue-100 to-indigo-100 overflow-hidden flex items-center justify-center group">
                                     {teacher.image && teacher.image.trim() !== "" ? (
                                         <img
                                             src={teacher.image}
                                             alt={teacher.name}
-                                            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                                            className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            style={{ objectPosition: "center top" }}
                                             onError={(e) => {
-                                                e.target.style.display = "none";
-                                                e.target.nextElementSibling.style.display = "flex";
+                                                e.currentTarget.parentElement.innerHTML = `
+                                                    <div class="h-full w-full flex items-center justify-center text-blue-300 bg-gradient-to-br from-blue-100 to-indigo-100">
+                                                        <svg class="w-20 h-20" fill="currentColor" viewBox="0 0 24 24">
+                                                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                                        </svg>
+                                                    </div>
+                                                `;
                                             }}
                                         />
-                                    ) : null}
-                                    <div className={`w-full h-full flex items-center justify-center text-blue-300 bg-gradient-to-br from-blue-100 to-indigo-100 ${teacher.image && teacher.image.trim() !== "" ? 'hidden' : ''}`}>
-                                        <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                                        </svg>
-                                    </div>
+                                    ) : (
+                                        <div className="h-full w-full flex items-center justify-center text-blue-300 bg-gradient-to-br from-blue-100 to-indigo-100">
+                                            <svg className="w-20 h-20" fill="currentColor" viewBox="0 0 24 24">
+                                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                                            </svg>
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Content */}
