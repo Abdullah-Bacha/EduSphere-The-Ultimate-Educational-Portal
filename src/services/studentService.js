@@ -66,6 +66,7 @@ export async function createStudent(data) {
         gender: data.gender || "",
         dateOfBirth: data.dateOfBirth || null,
         address: data.address || "",
+        image: data.image || "",
         status: data.status || "Active",
     };
 
@@ -87,6 +88,7 @@ export async function updateStudent(id, data) {
         gender: data.gender ?? "",
         dateOfBirth: data.dateOfBirth || null,
         address: data.address ?? "",
+        image: data.image ?? "",
         status: data.status || "Active",
         role: "student",
     };

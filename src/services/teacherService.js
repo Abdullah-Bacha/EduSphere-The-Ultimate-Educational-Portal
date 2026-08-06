@@ -64,6 +64,7 @@ export async function createTeacher(data) {
         role: "teacher",
         phone: data.phone || "",
         bio: data.bio || "",
+        image: data.image || "",
         status: data.status || "Active",
         isFeatured: Boolean(data.isFeatured),
     };
@@ -84,6 +85,7 @@ export async function updateTeacher(id, data) {
         email: data.email,
         phone: data.phone ?? "",
         bio: data.bio ?? "",
+        image: data.image ?? "",
         status: data.status || "Active",
         isFeatured: Boolean(data.isFeatured),
         role: "teacher",
