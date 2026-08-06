@@ -64,10 +64,11 @@ export default function FAQSection() {
         <section className="py-24 bg-white">
             <Container className="max-w-3xl">
                 <div className="text-center mb-16">
-                    <span className="text-blue-600 uppercase font-semibold tracking-widest text-sm">
-                        FAQ
-                    </span>
-                    <h2 className="text-4xl lg:text-5xl font-bold text-black mt-4 mb-6">
+                    <div className="inline-flex items-center justify-center gap-2 mb-4 bg-blue-100 px-4 py-2 rounded-full border border-blue-200">
+                        <span className="inline-block w-2 h-2 bg-blue-600 rounded-full"></span>
+                        <span className="text-blue-600 font-semibold text-xs uppercase tracking-widest">FAQ</span>
+                    </div>
+                    <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mt-4 mb-6">
                         Frequently Asked Questions
                     </h2>
                     <p className="text-gray-600 text-base leading-relaxed">

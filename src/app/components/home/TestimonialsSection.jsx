@@ -25,12 +25,12 @@ export default async function TestimonialsSection() {
             <div className="max-w-7xl mx-auto px-6">
 
                 <div className="text-center mb-16">
+                    <div className="inline-flex items-center justify-center gap-2 mb-4 bg-blue-100 px-4 py-2 rounded-full border border-blue-200">
+                        <span className="inline-block w-2 h-2 bg-blue-600 rounded-full"></span>
+                        <span className="text-blue-600 font-semibold text-xs uppercase tracking-widest">Testimonials</span>
+                    </div>
 
-                    <span className="text-blue-600 uppercase font-semibold tracking-widest text-sm">
-                        Testimonials
-                    </span>
-
-                    <h2 className="text-4xl lg:text-5xl font-bold mt-4 text-black">
+                    <h2 className="text-4xl lg:text-5xl font-bold mt-4 text-gray-900">
                         What Our Students Say
                     </h2>
 
