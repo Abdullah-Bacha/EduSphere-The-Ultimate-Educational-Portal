@@ -12,13 +12,15 @@ const TRUST_POINTS = [
 
 export default function TrustedCompanies() {
     return (
-        <section className="border-y border-gray-200 bg-white py-14">
+        <section className="border-y border-gray-200 bg-white py-16">
             <Container>
-                <p className="text-center text-xs font-semibold uppercase tracking-widest text-gray-500">
-                    Platform at a glance
-                </p>
+                <div className="text-center mb-12">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-gray-600">
+                        Platform at a glance
+                    </p>
+                </div>
 
-                <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
                     {TRUST_POINTS.map(({ icon: Icon, label, sublabel }) => (
                         <div
                             key={sublabel}
