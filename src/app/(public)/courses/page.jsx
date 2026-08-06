@@ -10,7 +10,7 @@ export default function CoursesPage() {
     return (
         <main className="pt-20">
 
-            <section className="bg-[var(--text-primary)] text-white py-24">
+            <section className="bg-blue-600 text-white py-24">
 
                 <div className="max-w-7xl mx-auto px-6 text-center">
 

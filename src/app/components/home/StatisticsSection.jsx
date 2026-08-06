@@ -57,7 +57,7 @@ export default async function StatisticsSection() {
     ];
 
     return (
-        <section className="py-24 bg-gradient-to-r from-[var(--accent)] to-indigo-700">
+        <section className="py-24 bg-gradient-to-r from-blue-600 to-blue-700">
 
             <div className="max-w-7xl mx-auto px-6">
 

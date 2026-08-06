@@ -12,9 +12,9 @@ const TRUST_POINTS = [
 
 export default function TrustedCompanies() {
     return (
-        <section className="border-y border-[var(--border)] bg-[var(--bg-main)] py-14">
+        <section className="border-y border-gray-200 bg-white py-14">
             <Container>
-                <p className="text-center text-xs font-semibold uppercase tracking-widest text-[var(--text-muted)]">
+                <p className="text-center text-xs font-semibold uppercase tracking-widest text-gray-500">
                     Platform at a glance
                 </p>
 

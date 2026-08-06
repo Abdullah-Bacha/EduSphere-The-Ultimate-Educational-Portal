@@ -61,16 +61,16 @@ export default function FAQSection() {
     const [openIndex, setOpenIndex] = useState(0);
 
     return (
-        <section className="py-24 bg-[var(--surface)]">
+        <section className="py-24 bg-white">
             <Container className="max-w-3xl">
                 <div className="text-center mb-16">
-                    <span className="text-[var(--accent)] uppercase font-semibold tracking-widest text-sm">
+                    <span className="text-blue-600 uppercase font-semibold tracking-widest text-sm">
                         FAQ
                     </span>
-                    <h2 className="text-4xl lg:text-5xl font-bold text-[var(--text-primary)] mt-4 mb-6">
+                    <h2 className="text-4xl lg:text-5xl font-bold text-black mt-4 mb-6">
                         Frequently Asked Questions
                     </h2>
-                    <p className="text-[var(--text-secondary)] text-base leading-relaxed">
+                    <p className="text-gray-600 text-base leading-relaxed">
                         Everything you need to know before you get started.
                     </p>
                 </div>

@@ -60,7 +60,7 @@ export default function RegisterPage() {
     return (
         <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(99,102,241,0.08),_transparent_30%),linear-gradient(135deg,_var(--bg-main)_0%,_var(--surface)_100%)] px-4 py-16">
             <div className="mx-auto flex max-w-6xl flex-col overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] shadow-card lg:flex-row">
-                <div className="flex flex-1 flex-col justify-between bg-[var(--text-primary)] p-8 text-white lg:p-10">
+                <div className="flex flex-1 flex-col justify-between bg-blue-600 p-8 text-white lg:p-10">
                     <div>
                         <div className="flex h-12 w-12 items-center justify-center rounded-[var(--radius-md)] bg-white/10">
                             <GraduationCap size={24} />

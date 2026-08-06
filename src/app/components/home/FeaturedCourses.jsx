@@ -10,18 +10,18 @@ export default async function FeaturedCourses() {
             <div className="max-w-7xl mx-auto px-6">
                 {/* Header */}
                 <div className="text-center mb-16">
-                    <div className="inline-flex items-center justify-center gap-2 mb-4 bg-[var(--accent-light)] px-4 py-2 rounded-full border border-indigo-200">
-                        <Star size={16} className="text-[var(--accent)] fill-current" />
-                        <span className="text-[var(--accent)] font-semibold text-xs uppercase tracking-wider">
+                    <div className="inline-flex items-center justify-center gap-2 mb-4 bg-blue-100 px-4 py-2 rounded-full border border-blue-200">
+                        <Star size={16} className="text-blue-600 fill-current" />
+                        <span className="text-blue-600 font-semibold text-xs uppercase tracking-wider">
                             Featured Courses
                         </span>
                     </div>
 
-                    <h2 className="text-4xl lg:text-5xl font-bold text-[var(--text-primary)] mt-4 mb-6">
+                    <h2 className="text-4xl lg:text-5xl font-bold text-black mt-4 mb-6">
                         Learn From Our Most Popular Courses
                     </h2>
 
-                    <p className="text-[var(--text-secondary)] max-w-2xl mx-auto text-base leading-relaxed">
+                    <p className="text-gray-600 max-w-2xl mx-auto text-base leading-relaxed">
                         Explore our latest professional courses designed by experienced instructors to help you master in-demand skills.
                     </p>
                 </div>

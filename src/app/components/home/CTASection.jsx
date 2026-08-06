@@ -4,7 +4,7 @@ import { ArrowRight, BookOpen, UserPlus } from "lucide-react";
 
 export default function CTASection() {
     return (
-        <section className="py-24 bg-[var(--text-primary)]">
+        <section className="py-24 bg-blue-600">
             <Container className="max-w-4xl text-center">
                 <span className="inline-block rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white/70">
                     Get started today

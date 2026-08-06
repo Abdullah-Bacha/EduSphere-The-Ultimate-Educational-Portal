@@ -30,16 +30,16 @@ const features = [
 
 export default function WhyChooseUs() {
     return (
-        <section className="py-24 bg-[var(--bg-main)]">
+        <section className="py-24 bg-white">
             <Container>
                 <div className="text-center max-w-2xl mx-auto mb-16">
-                    <span className="text-[var(--accent)] font-semibold uppercase tracking-widest text-sm">
+                    <span className="text-blue-600 font-semibold uppercase tracking-widest text-sm">
                         Why choose us
                     </span>
-                    <h2 className="mt-4 text-4xl lg:text-5xl font-bold text-[var(--text-primary)]">
+                    <h2 className="mt-4 text-4xl lg:text-5xl font-bold text-black">
                         Everything you need to build your future
                     </h2>
-                    <p className="mt-6 text-[var(--text-secondary)] leading-relaxed text-base">
+                    <p className="mt-6 text-gray-600 leading-relaxed text-base">
                         Our platform combines modern technology, expert instructors, and practical learning to help you achieve your goals.
                     </p>
                 </div>

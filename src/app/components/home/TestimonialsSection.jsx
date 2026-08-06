@@ -20,21 +20,21 @@ export default async function TestimonialsSection() {
     }
 
     return (
-        <section className="py-24 bg-[var(--bg-main)]">
+        <section className="py-24 bg-white">
 
             <div className="max-w-7xl mx-auto px-6">
 
                 <div className="text-center mb-16">
 
-                    <span className="text-[var(--accent)] uppercase font-semibold tracking-widest text-sm">
+                    <span className="text-blue-600 uppercase font-semibold tracking-widest text-sm">
                         Testimonials
                     </span>
 
-                    <h2 className="text-4xl lg:text-5xl font-bold mt-4 text-[var(--text-primary)]">
+                    <h2 className="text-4xl lg:text-5xl font-bold mt-4 text-black">
                         What Our Students Say
                     </h2>
 
-                    <p className="text-[var(--text-secondary)] mt-6 max-w-2xl mx-auto leading-relaxed text-base">
+                    <p className="text-gray-600 mt-6 max-w-2xl mx-auto leading-relaxed text-base">
                         Hear from students who have transformed their careers through our university.
                     </p>
 
