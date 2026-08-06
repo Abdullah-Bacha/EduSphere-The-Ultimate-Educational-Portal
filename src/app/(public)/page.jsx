@@ -3,12 +3,10 @@ import TestimonialsSection from "../components/home/TestimonialsSection";
 import CTASection from "../components/home/CTASection";
 import FooterSection from "../components/home/FooterSection";
 import HeroSection from "../components/home/HeroSection";
-import TrustedCompanies from "../components/home/TrustedCompanies";
 import AboutSection from "../components/home/AboutSection";
 import WhyChooseUs from "../components/home/WhyChooseUs";
 import FeaturedCourses from "../components/home/FeaturedCourses";
 import FeaturedTeachers from "../components/home/FeaturedTeachers";
-import FAQSection from "../components/home/FAQSection";
 
 export const dynamic = 'force-dynamic';
 
@@ -23,8 +21,6 @@ export default function HomePage() {
     <>
       <HeroSection />
 
-      <TrustedCompanies />
-
       <AboutSection />
 
       <WhyChooseUs />
@@ -36,8 +32,6 @@ export default function HomePage() {
       <StatisticsSection />
 
       <TestimonialsSection />
-
-      <FAQSection />
 
       <CTASection />
 

@@ -57,7 +57,7 @@ export default async function HeroSection() {
                                 </Button>
                             </Link>
                             <Link href="/contact">
-                                <Button className="border-2 border-gray-300 text-gray-700 bg-white hover:bg-gray-50 px-8 py-3 rounded-lg font-semibold transition-all hover:border-gray-400">
+                                <Button className="border-2 border-gray-300 text-gray-700 bg-[#EFE9F8] hover:bg-gray-50 px-8 py-3 rounded-lg font-semibold transition-all hover:border-gray-400">
                                     Contact Us
                                 </Button>
                             </Link>

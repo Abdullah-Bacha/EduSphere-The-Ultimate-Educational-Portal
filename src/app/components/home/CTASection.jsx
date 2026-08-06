@@ -11,11 +11,11 @@ export default function CTASection() {
                 </span>
 
                 <h2 className="mt-8 text-4xl lg:text-5xl font-bold tracking-tight text-white">
-                    Ready to start your learning journey?
+                    Start Your Learning Journey Today
                 </h2>
 
                 <p className="mx-auto mt-6 max-w-lg text-base leading-8 text-white/60">
-                    Join thousands of students already building skills on LMS University. Expert instructors, flexible pacing, and a certificate at the end.
+                    Join thousands of students transforming their futures. Expert-led courses, flexible learning, and industry-recognized certificates await.
                 </p>
 
                 <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
