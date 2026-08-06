@@ -10,17 +10,16 @@ export default function TeachersPage() {
     return (
         <main className="pt-20">
 
-            <section className="bg-slate-900 text-white py-20">
+            <section className="bg-[var(--text-primary)] text-white py-24">
 
                 <div className="max-w-7xl mx-auto px-6 text-center">
 
-                    <h1 className="text-5xl font-bold">
+                    <h1 className="text-5xl lg:text-6xl font-bold">
                         Our Teachers
                     </h1>
 
-                    <p className="mt-5 text-slate-300 max-w-2xl mx-auto">
-                        Meet our experienced teachers who are dedicated to
-                        providing quality education and practical learning.
+                    <p className="mt-6 text-white/70 max-w-2xl mx-auto leading-relaxed text-lg">
+                        Meet our experienced teachers who are dedicated to providing quality education and practical learning.
                     </p>
 
                 </div>

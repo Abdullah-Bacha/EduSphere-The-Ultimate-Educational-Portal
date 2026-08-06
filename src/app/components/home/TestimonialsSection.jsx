@@ -6,7 +6,7 @@ function Avatar({ name, image }) {
     }
     const initial = name?.charAt(0)?.toUpperCase() || "S";
     return (
-        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center text-xl font-bold">
+        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--accent)] to-indigo-600 text-white flex items-center justify-center text-xl font-bold">
             {initial}
         </div>
     );
@@ -20,23 +20,22 @@ export default async function TestimonialsSection() {
     }
 
     return (
-        <section className="py-24 bg-gray-50">
+        <section className="py-24 bg-[var(--bg-main)]">
 
             <div className="max-w-7xl mx-auto px-6">
 
                 <div className="text-center mb-16">
 
-                    <span className="text-blue-600 uppercase font-semibold tracking-widest">
+                    <span className="text-[var(--accent)] uppercase font-semibold tracking-widest text-sm">
                         Testimonials
                     </span>
 
-                    <h2 className="text-4xl font-bold mt-3">
+                    <h2 className="text-4xl lg:text-5xl font-bold mt-4 text-[var(--text-primary)]">
                         What Our Students Say
                     </h2>
 
-                    <p className="text-gray-500 mt-4 max-w-2xl mx-auto">
-                        Hear from students who have transformed their careers
-                        through our university.
+                    <p className="text-[var(--text-secondary)] mt-6 max-w-2xl mx-auto leading-relaxed text-base">
+                        Hear from students who have transformed their careers through our university.
                     </p>
 
                 </div>
@@ -47,7 +46,7 @@ export default async function TestimonialsSection() {
 
                         <div
                             key={item._id}
-                            className="bg-white rounded-2xl shadow-lg p-8 hover:-translate-y-2 transition"
+                            className="bg-[var(--surface)] border border-[var(--border)] rounded-[var(--radius-lg)] shadow-sm p-8 hover:-translate-y-1 hover:shadow-card-hover transition-all duration-300"
                         >
 
                             <div className="flex items-center gap-4">
@@ -56,11 +55,11 @@ export default async function TestimonialsSection() {
 
                                 <div>
 
-                                    <h3 className="font-bold text-lg">
+                                    <h3 className="font-semibold text-base text-[var(--text-primary)]">
                                         {item.name}
                                     </h3>
 
-                                    <p className="text-sm text-blue-600">
+                                    <p className="text-sm text-[var(--text-secondary)]">
                                         {item.role}
                                     </p>
 
@@ -68,14 +67,14 @@ export default async function TestimonialsSection() {
 
                             </div>
 
-                            <div className="flex mt-5 text-yellow-400 text-xl">
+                            <div className="flex mt-5 text-yellow-400 text-lg">
 
                                 {"★".repeat(item.rating || 5)}
                                 {"☆".repeat(5 - (item.rating || 5))}
 
                             </div>
 
-                            <p className="text-gray-600 mt-5 leading-7">
+                            <p className="text-[var(--text-secondary)] mt-5 leading-7 text-sm">
 
                                 "{item.content}"
 

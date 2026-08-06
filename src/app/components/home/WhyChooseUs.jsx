@@ -30,39 +30,38 @@ const features = [
 
 export default function WhyChooseUs() {
     return (
-        <section className="py-24 bg-slate-50">
+        <section className="py-24 bg-[var(--bg-main)]">
             <Container>
-                <div className="text-center max-w-2xl mx-auto">
-                    <span className="text-blue-600 font-semibold uppercase tracking-widest text-sm">
+                <div className="text-center max-w-2xl mx-auto mb-16">
+                    <span className="text-[var(--accent)] font-semibold uppercase tracking-widest text-sm">
                         Why choose us
                     </span>
-                    <h2 className="mt-4 text-4xl font-bold tracking-[-0.02em] text-slate-900">
+                    <h2 className="mt-4 text-4xl lg:text-5xl font-bold text-[var(--text-primary)]">
                         Everything you need to build your future
                     </h2>
-                    <p className="mt-5 text-slate-500 leading-8">
-                        Our platform combines modern technology, expert instructors, and practical
-                        learning to help you achieve your goals.
+                    <p className="mt-6 text-[var(--text-secondary)] leading-relaxed text-base">
+                        Our platform combines modern technology, expert instructors, and practical learning to help you achieve your goals.
                     </p>
                 </div>
 
-                <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                     {features.map((feature, idx) => {
                         const Icon = feature.icon;
                         return (
                             <div
                                 key={feature.title}
-                                className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                                className="group relative overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] bg-[var(--surface)] p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover"
                             >
-                                <span className="absolute right-4 top-4 text-6xl font-black text-slate-100 select-none">
+                                <span className="absolute right-4 top-4 text-6xl font-black text-[var(--border)] select-none">
                                     {String(idx + 1).padStart(2, "0")}
                                 </span>
-                                <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${feature.gradient} text-white shadow`}>
+                                <div className={`flex h-12 w-12 items-center justify-center rounded-[var(--radius-md)] bg-gradient-to-br ${feature.gradient} text-white shadow-sm`}>
                                     <Icon size={22} strokeWidth={1.6} />
                                 </div>
-                                <h3 className="mt-5 text-lg font-semibold text-slate-900">
+                                <h3 className="mt-5 text-lg font-semibold text-[var(--text-primary)]">
                                     {feature.title}
                                 </h3>
-                                <p className="mt-3 text-sm leading-7 text-slate-500">
+                                <p className="mt-3 text-sm leading-7 text-[var(--text-secondary)]">
                                     {feature.description}
                                 </p>
                             </div>
