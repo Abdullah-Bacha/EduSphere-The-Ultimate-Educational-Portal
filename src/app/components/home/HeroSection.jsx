@@ -84,7 +84,7 @@ export default async function HeroSection() {
                     <div className="relative hidden lg:block h-full min-h-[500px]">
                         <div className="relative w-full h-full flex items-center justify-center">
                             <Image
-                                src="/images/hero.svg"
+                                src="/images/Students learning.png"
                                 alt="Student Learning"
                                 width={350}
                                 height={400}

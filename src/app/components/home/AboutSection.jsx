@@ -34,7 +34,7 @@ export default function AboutSection() {
                         <div className="relative w-full h-96 flex items-center justify-center">
                             <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 rounded-3xl"></div>
                             <Image
-                                src="/images/hero2.svg"
+                                src="/images/Student learning.png"
                                 alt="About University - Student"
                                 width={400}
                                 height={450}
