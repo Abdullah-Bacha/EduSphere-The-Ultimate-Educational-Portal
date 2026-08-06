@@ -29,15 +29,16 @@ export default function AboutSection() {
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
                         {/* Left Side - Image with Floating Cards */}
                         <div className="relative flex justify-center">
-                            <div className="relative w-80 h-96">
-                                {/* Main Image */}
-                                <div className="relative z-20 w-full h-full flex items-center justify-center">
+                            <div className="relative w-96 h-[500px]">
+                                {/* Main Image Container */}
+                                <div className="relative z-20 w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 rounded-3xl p-8">
                                     <Image
                                         src="/images/hero.svg"
                                         alt="About University"
-                                        width={320}
-                                        height={400}
+                                        width={350}
+                                        height={450}
                                         className="w-full h-full object-contain"
+                                        priority
                                     />
                                 </div>
 
