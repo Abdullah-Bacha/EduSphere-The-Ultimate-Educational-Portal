@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Container from "../ui/Container";
 import Button from "../ui/Button";
-import HeroStats from "./HeroStats";
 import Image from "next/image";
 import User from "@/models/User";
 import Course from "@/models/Course";
@@ -23,59 +22,119 @@ export default async function HeroSection() {
     const stats = await getHeroStats();
 
     return (
-        <section className="relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28" style={{ background: "linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%)" }}>
-            {/* Decorative elements */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute -right-40 -top-40 w-80 h-80 bg-indigo-100 rounded-full blur-3xl opacity-20"></div>
-                <div className="absolute -left-40 bottom-0 w-96 h-96 bg-blue-100 rounded-full blur-3xl opacity-20"></div>
+        <section className="relative overflow-hidden pt-20 pb-32 lg:pt-32 lg:pb-40" style={{ background: "linear-gradient(135deg, #e8eef8 0%, #f0e8f8 50%, #e8f4f8 100%)" }}>
+            {/* Decorative dot pattern */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
+                <div className="absolute top-20 left-10 w-1 h-1 bg-blue-400 rounded-full"></div>
+                <div className="absolute top-32 left-20 w-1 h-1 bg-blue-400 rounded-full"></div>
+                <div className="absolute top-40 left-32 w-1 h-1 bg-blue-400 rounded-full"></div>
+                <div className="absolute top-12 left-40 w-1 h-1 bg-blue-400 rounded-full"></div>
             </div>
 
             <Container className="relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                    {/* Content */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    {/* Left Content */}
                     <div className="space-y-8">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--accent-light)] border border-indigo-200">
-                            <span className="inline-block w-2 h-2 bg-[var(--accent)] rounded-full"></span>
-                            <span className="text-sm font-semibold text-[var(--accent)]">Welcome to EduLMS</span>
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 border border-blue-200">
+                            <span className="inline-block w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
+                            <span className="text-xs font-semibold text-blue-600">Welcome to EduLMS</span>
                         </div>
 
-                        <div className="space-y-4">
-                            <h1 className="text-5xl lg:text-6xl font-extrabold text-[var(--text-primary)] leading-tight tracking-tight">
-                                Learn Today, Lead Tomorrow
+                        <div className="space-y-6">
+                            <h1 className="text-5xl lg:text-6xl font-black leading-tight">
+                                Learn Today, <span className="text-blue-600">Lead Tomorrow</span>
                             </h1>
-                            <p className="text-lg text-[var(--text-secondary)] leading-relaxed max-w-lg">
+                            <p className="text-base text-gray-600 leading-relaxed max-w-md">
                                 Join thousands of students learning through our modern Learning Management System. Expert instructors, practical courses, and industry-ready skills await you.
                             </p>
                         </div>
 
-                        <div className="flex flex-wrap gap-4 pt-4">
+                        <div className="flex flex-wrap gap-3 pt-4">
                             <Link href="/courses">
-                                <Button className="bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white px-8 py-3.5 rounded-[var(--radius-md)] font-semibold transition-all hover:shadow-md">
+                                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all hover:shadow-lg flex items-center gap-2">
                                     Explore Courses
+                                    <span>→</span>
                                 </Button>
                             </Link>
                             <Link href="/contact">
-                                <Button variant="outline" className="border border-[var(--border)] text-[var(--text-primary)] px-8 py-3.5 rounded-[var(--radius-md)] font-semibold hover:bg-[var(--surface-hover)] transition-all">
+                                <Button className="border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 px-8 py-3 rounded-lg font-semibold transition-all">
                                     Contact Us
                                 </Button>
                             </Link>
                         </div>
 
-                        <HeroStats students={stats.students} courses={stats.courses} teachers={stats.teachers} />
+                        {/* Stats */}
+                        <div className="flex gap-8 pt-8">
+                            <div>
+                                <div className="text-2xl font-black text-black">{stats.students}K+</div>
+                                <div className="text-sm text-gray-500">Students</div>
+                            </div>
+                            <div>
+                                <div className="text-2xl font-black text-black">{stats.courses}+</div>
+                                <div className="text-sm text-gray-500">Courses</div>
+                            </div>
+                            <div>
+                                <div className="text-2xl font-black text-black">{stats.teachers}+</div>
+                                <div className="text-sm text-gray-500">Instructors</div>
+                            </div>
+                        </div>
                     </div>
 
-                    {/* Visual */}
-                    <div className="relative hidden lg:block">
-                        <div className="relative w-full aspect-square">
-                            <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)]/10 to-indigo-50 rounded-2xl"></div>
+                    {/* Right Visual with Floating Cards */}
+                    <div className="relative hidden lg:block h-full min-h-[500px]">
+                        <div className="relative w-full h-full flex items-center justify-center">
                             <Image
                                 src="/images/hero.svg"
                                 alt="Student Learning"
-                                width={400}
+                                width={350}
                                 height={400}
                                 priority
-                                className="w-full h-full object-contain"
+                                className="relative z-20 w-auto h-96 object-contain"
                             />
+
+                            {/* Floating Stat Card - Top Left */}
+                            <div className="absolute top-20 left-0 bg-white rounded-lg shadow-xl p-4 z-10 animate-bounce" style={{ animationDelay: '0s' }}>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">👥</div>
+                                    <div>
+                                        <div className="text-sm font-bold text-black">50K+</div>
+                                        <div className="text-xs text-gray-500">Active Students</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Floating Stat Card - Top Right */}
+                            <div className="absolute top-16 right-0 bg-white rounded-lg shadow-xl p-4 z-10 animate-bounce" style={{ animationDelay: '0.5s' }}>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">📚</div>
+                                    <div>
+                                        <div className="text-sm font-bold text-black">500+</div>
+                                        <div className="text-xs text-gray-500">Courses</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Floating Stat Card - Middle Right */}
+                            <div className="absolute bottom-32 right-10 bg-white rounded-lg shadow-xl p-4 z-10 animate-bounce" style={{ animationDelay: '0.2s' }}>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600">⭐</div>
+                                    <div>
+                                        <div className="text-sm font-bold text-black">4.9 / 5</div>
+                                        <div className="text-xs text-gray-500">Learning</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Floating Stat Card - Bottom Right */}
+                            <div className="absolute bottom-20 right-0 bg-white rounded-lg shadow-xl p-4 z-10 animate-bounce" style={{ animationDelay: '0.7s' }}>
+                                <div className="flex items-center gap-2">
+                                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600">📈</div>
+                                    <div>
+                                        <div className="text-sm font-bold text-black">98%</div>
+                                        <div className="text-xs text-gray-500">Success Rate</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
