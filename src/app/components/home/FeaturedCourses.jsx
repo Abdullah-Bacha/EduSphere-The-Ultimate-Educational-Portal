@@ -128,7 +128,7 @@ export default async function FeaturedCourses() {
                 <div className="text-center">
                     <Link
                         href="/courses"
-                        className="inline-flex items-center justify-center gap-2 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white px-8 py-3.5 rounded-[var(--radius-md)] font-semibold transition-all duration-200 hover:shadow-md"
+                        className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3.5 rounded-lg font-semibold transition-all duration-200 hover:shadow-lg"
                     >
                         <span>View All Courses</span>
                         <ArrowRight size={16} />

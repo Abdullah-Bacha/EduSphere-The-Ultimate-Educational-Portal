@@ -11,22 +11,22 @@ export default function AboutSection() {
                     {/* Left Side - Image with Feature Boxes */}
                     <div className="relative">
                         {/* Feature Boxes - Left Sidebar */}
-                        <div className="absolute left-0 top-0 space-y-3 z-30">
-                            <div className="bg-white rounded-full px-4 py-2 shadow-md border border-gray-200 flex items-center gap-2 text-sm font-medium whitespace-nowrap">
-                                <Lock size={16} className="text-blue-600" />
-                                <span>Secure & Safe Learning</span>
+                        <div className="absolute -left-8 top-0 space-y-3 z-30 flex flex-col">
+                            <div className="bg-white rounded-full px-4 py-2.5 shadow-md border border-gray-200 flex items-center gap-2 text-sm font-medium whitespace-nowrap hover:shadow-lg transition-shadow">
+                                <Lock size={16} className="text-blue-600 flex-shrink-0" />
+                                <span className="text-gray-900">Secure & Safe Learning</span>
                             </div>
-                            <div className="bg-white rounded-full px-4 py-2 shadow-md border border-gray-200 flex items-center gap-2 text-sm font-medium whitespace-nowrap">
-                                <Star size={16} className="text-yellow-500" />
-                                <span>Quality Education</span>
+                            <div className="bg-white rounded-full px-4 py-2.5 shadow-md border border-gray-200 flex items-center gap-2 text-sm font-medium whitespace-nowrap hover:shadow-lg transition-shadow">
+                                <Star size={16} className="text-amber-500 flex-shrink-0" />
+                                <span className="text-gray-900">Quality Education</span>
                             </div>
-                            <div className="bg-white rounded-full px-4 py-2 shadow-md border border-gray-200 flex items-center gap-2 text-sm font-medium whitespace-nowrap">
-                                <CheckCircle2 size={16} className="text-green-600" />
-                                <span>Certified Courses</span>
+                            <div className="bg-white rounded-full px-4 py-2.5 shadow-md border border-gray-200 flex items-center gap-2 text-sm font-medium whitespace-nowrap hover:shadow-lg transition-shadow">
+                                <CheckCircle2 size={16} className="text-emerald-600 flex-shrink-0" />
+                                <span className="text-gray-900">Certified Courses</span>
                             </div>
-                            <div className="bg-white rounded-full px-4 py-2 shadow-md border border-gray-200 flex items-center gap-2 text-sm font-medium whitespace-nowrap">
-                                <Users size={16} className="text-purple-600" />
-                                <span>Expert Teachers</span>
+                            <div className="bg-white rounded-full px-4 py-2.5 shadow-md border border-gray-200 flex items-center gap-2 text-sm font-medium whitespace-nowrap hover:shadow-lg transition-shadow">
+                                <Users size={16} className="text-indigo-600 flex-shrink-0" />
+                                <span className="text-gray-900">Expert Teachers</span>
                             </div>
                         </div>
 
@@ -45,13 +45,13 @@ export default function AboutSection() {
 
                         {/* Stats Boxes - Bottom */}
                         <div className="flex gap-4 mt-6">
-                            <div className="flex-1 bg-blue-600 text-white rounded-2xl p-4 text-center shadow-lg">
-                                <div className="text-2xl font-bold">10+</div>
-                                <div className="text-sm">Years of Excellence</div>
+                            <div className="flex-1 bg-blue-600 text-white rounded-xl p-5 text-center shadow-lg hover:shadow-xl transition-shadow">
+                                <div className="text-3xl font-bold">10+</div>
+                                <div className="text-sm mt-1 text-blue-100">Years of Excellence</div>
                             </div>
-                            <div className="flex-1 bg-blue-600 text-white rounded-2xl p-4 text-center shadow-lg">
-                                <div className="text-2xl font-bold">50K+</div>
-                                <div className="text-sm">Happy Students</div>
+                            <div className="flex-1 bg-blue-600 text-white rounded-xl p-5 text-center shadow-lg hover:shadow-xl transition-shadow">
+                                <div className="text-3xl font-bold">50K+</div>
+                                <div className="text-sm mt-1 text-blue-100">Happy Students</div>
                             </div>
                         </div>
                     </div>

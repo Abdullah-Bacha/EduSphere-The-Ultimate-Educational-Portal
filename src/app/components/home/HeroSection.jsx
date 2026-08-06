@@ -51,13 +51,13 @@ export default async function HeroSection() {
 
                         <div className="flex flex-wrap gap-3 pt-4">
                             <Link href="/courses">
-                                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all hover:shadow-lg flex items-center gap-2">
+                                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all hover:shadow-lg flex items-center gap-2 border border-blue-600">
                                     Explore Courses
                                     <span>→</span>
                                 </Button>
                             </Link>
                             <Link href="/contact">
-                                <Button className="border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 px-8 py-3 rounded-lg font-semibold transition-all">
+                                <Button className="border-2 border-gray-300 text-gray-700 bg-white hover:bg-gray-50 px-8 py-3 rounded-lg font-semibold transition-all hover:border-gray-400">
                                     Contact Us
                                 </Button>
                             </Link>
