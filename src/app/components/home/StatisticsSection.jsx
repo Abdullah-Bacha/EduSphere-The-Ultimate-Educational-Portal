@@ -62,10 +62,10 @@ export default async function StatisticsSection() {
             <div className="max-w-7xl mx-auto px-6">
 
                 <div className="text-center mb-16">
-
-                    <span className="text-white/80 uppercase tracking-widest font-semibold text-sm">
-                        Our Achievement
-                    </span>
+                    <div className="inline-flex items-center justify-center gap-2 mb-4 bg-white/10 px-4 py-2 rounded-full border border-white/20">
+                        <span className="inline-block w-2 h-2 bg-white rounded-full"></span>
+                        <span className="text-white/80 font-semibold text-xs uppercase tracking-widest">Our Achievement</span>
+                    </div>
 
                     <h2 className="text-4xl lg:text-5xl font-bold text-white mt-4 mb-6">
                         University In Numbers
@@ -87,15 +87,15 @@ export default async function StatisticsSection() {
 
                             <div
                                 key={item.title}
-                                className="bg-white/10 backdrop-blur-md rounded-[var(--radius-lg)] p-8 text-center border border-white/20 hover:-translate-y-1 transition duration-300"
+                                className="bg-white/10 backdrop-blur-md rounded-xl p-8 text-center border border-white/20 hover:-translate-y-1 hover:bg-white/15 transition-all duration-300"
                             >
 
-                                <div className="flex justify-center mb-5">
+                                <div className="flex justify-center mb-6">
 
-                                    <div className="bg-white w-16 h-16 rounded-full flex items-center justify-center">
+                                    <div className="bg-white w-16 h-16 rounded-full flex items-center justify-center shadow-lg">
 
                                         <Icon
-                                            className="text-[var(--accent)]"
+                                            className="text-blue-600"
                                             size={32}
                                         />
 
@@ -109,7 +109,7 @@ export default async function StatisticsSection() {
 
                                 </h3>
 
-                                <p className="text-blue-100 mt-3 text-lg">
+                                <p className="text-blue-100 mt-3 text-lg font-medium">
 
                                     {item.title}
 
