@@ -13,7 +13,7 @@ import NewsletterForm from "./NewsletterForm";
 
 export default function FooterSection() {
     return (
-        <footer className="bg-slate-900 text-white">
+        <footer className="bg-[var(--sidebar-bg)] text-white">
 
             <div className="max-w-7xl mx-auto px-6 py-20">
 
@@ -23,11 +23,11 @@ export default function FooterSection() {
 
                     <div>
 
-                        <h2 className="text-3xl font-bold text-blue-400">
+                        <h2 className="text-3xl font-bold text-[var(--accent)]">
                             LMS University
                         </h2>
 
-                        <p className="mt-5 text-gray-400 leading-7">
+                        <p className="mt-5 text-white/60 leading-7">
 
                             A modern learning management system designed to
                             provide quality education with experienced teachers
@@ -54,7 +54,7 @@ export default function FooterSection() {
                                 { label: "Contact", href: "/contact" },
                             ].map(({ label, href }) => (
                                 <li key={label}>
-                                    <Link href={href} className="text-gray-400 hover:text-blue-400 transition text-sm">
+                                    <Link href={href} className="text-white/60 hover:text-[var(--accent)] transition text-sm">
                                         {label}
                                     </Link>
                                 </li>

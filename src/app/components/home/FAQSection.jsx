@@ -39,19 +39,19 @@ const faqs = [
 
 function FAQItem({ faq, isOpen, onToggle }) {
     return (
-        <div className="border-b border-slate-200 py-5">
+        <div className="border-b border-[var(--border)] py-5">
             <button
                 onClick={onToggle}
-                className="w-full flex items-center justify-between text-left gap-4"
+                className="w-full flex items-center justify-between text-left gap-4 hover:text-[var(--accent)] transition-colors"
             >
-                <span className="font-semibold text-slate-900">{faq.question}</span>
+                <span className="font-semibold text-[var(--text-primary)]">{faq.question}</span>
                 <ChevronDown
                     size={20}
-                    className={`shrink-0 text-slate-400 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                    className={`shrink-0 text-[var(--text-muted)] transition-transform ${isOpen ? "rotate-180" : ""}`}
                 />
             </button>
             {isOpen && (
-                <p className="mt-3 text-slate-600 leading-7 text-sm">{faq.answer}</p>
+                <p className="mt-3 text-[var(--text-secondary)] leading-7 text-sm">{faq.answer}</p>
             )}
         </div>
     );
@@ -61,16 +61,16 @@ export default function FAQSection() {
     const [openIndex, setOpenIndex] = useState(0);
 
     return (
-        <section className="py-24 bg-white">
+        <section className="py-24 bg-[var(--surface)]">
             <Container className="max-w-3xl">
-                <div className="text-center mb-14">
-                    <span className="text-blue-600 uppercase font-semibold tracking-widest text-sm">
+                <div className="text-center mb-16">
+                    <span className="text-[var(--accent)] uppercase font-semibold tracking-widest text-sm">
                         FAQ
                     </span>
-                    <h2 className="text-4xl font-bold text-slate-900 mt-3">
+                    <h2 className="text-4xl lg:text-5xl font-bold text-[var(--text-primary)] mt-4 mb-6">
                         Frequently Asked Questions
                     </h2>
-                    <p className="text-slate-500 mt-4">
+                    <p className="text-[var(--text-secondary)] text-base leading-relaxed">
                         Everything you need to know before you get started.
                     </p>
                 </div>

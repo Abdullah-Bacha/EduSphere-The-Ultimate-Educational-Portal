@@ -6,22 +6,22 @@ export default async function FeaturedTeachers() {
     const teachers = await getFeaturedTeachers(4);
 
     return (
-        <section className="py-20 bg-gradient-to-b from-slate-50 to-white">
+        <section className="py-24 bg-[var(--bg-main)]">
             <div className="max-w-7xl mx-auto px-6">
                 {/* Header */}
-                <div className="text-center mb-14">
-                    <div className="inline-flex items-center justify-center gap-2 mb-4 bg-blue-100/50 px-4 py-2 rounded-full">
-                        <Award size={16} className="text-blue-600" />
-                        <span className="text-blue-600 font-semibold text-xs uppercase tracking-wider">
+                <div className="text-center mb-16">
+                    <div className="inline-flex items-center justify-center gap-2 mb-4 bg-[var(--accent-light)] px-4 py-2 rounded-full border border-indigo-200">
+                        <Award size={16} className="text-[var(--accent)]" />
+                        <span className="text-[var(--accent)] font-semibold text-xs uppercase tracking-wider">
                             Our Teachers
                         </span>
                     </div>
 
-                    <h2 className="text-4xl font-bold text-slate-900 mt-4 mb-4">
-                        Learn From <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Expert Teachers</span>
+                    <h2 className="text-4xl lg:text-5xl font-bold text-[var(--text-primary)] mt-4 mb-6">
+                        Learn From Expert Teachers
                     </h2>
 
-                    <p className="text-slate-600 max-w-2xl mx-auto">
+                    <p className="text-[var(--text-secondary)] max-w-2xl mx-auto text-base leading-relaxed">
                         Meet our experienced and dedicated teachers committed to helping students succeed in their learning journey.
                     </p>
                 </div>
@@ -34,7 +34,7 @@ export default async function FeaturedTeachers() {
                             key={teacher._id}
                             className="group h-full"
                         >
-                            <div className="h-full bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border border-slate-100/60 overflow-hidden flex flex-col">
+                            <div className="h-full bg-[var(--surface)] rounded-[var(--radius-lg)] shadow-sm hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 border border-[var(--border)] overflow-hidden flex flex-col">
 
                                 {/* Image Container */}
                                 <div className="relative h-48 bg-gradient-to-br from-blue-100 to-indigo-100 overflow-hidden flex items-center justify-center">
@@ -107,7 +107,7 @@ export default async function FeaturedTeachers() {
                 <div className="text-center">
                     <Link
                         href="/teachers"
-                        className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                        className="inline-flex items-center justify-center gap-2 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white px-8 py-3.5 rounded-[var(--radius-md)] font-semibold transition-all duration-200 hover:shadow-md"
                     >
                         View All Teachers
                         <ArrowRight size={18} />

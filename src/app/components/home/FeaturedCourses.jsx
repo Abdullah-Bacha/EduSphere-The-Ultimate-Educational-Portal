@@ -6,35 +6,35 @@ export default async function FeaturedCourses() {
     const courses = await getFeaturedCourses(6);
 
     return (
-        <section className="py-20 bg-gradient-to-b from-white via-slate-50 to-slate-100">
+        <section className="py-24 bg-white">
             <div className="max-w-7xl mx-auto px-6">
                 {/* Header */}
-                <div className="text-center mb-14">
-                    <div className="inline-flex items-center justify-center gap-2 mb-4 bg-blue-100/50 px-4 py-2 rounded-full">
-                        <Star size={16} className="text-blue-600 fill-blue-600" />
-                        <span className="text-blue-600 font-semibold text-xs uppercase tracking-wider">
+                <div className="text-center mb-16">
+                    <div className="inline-flex items-center justify-center gap-2 mb-4 bg-[var(--accent-light)] px-4 py-2 rounded-full border border-indigo-200">
+                        <Star size={16} className="text-[var(--accent)] fill-current" />
+                        <span className="text-[var(--accent)] font-semibold text-xs uppercase tracking-wider">
                             Featured Courses
                         </span>
                     </div>
 
-                    <h2 className="text-4xl font-bold text-slate-900 mt-4 mb-4">
-                        Learn From Our Most <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Popular Courses</span>
+                    <h2 className="text-4xl lg:text-5xl font-bold text-[var(--text-primary)] mt-4 mb-6">
+                        Learn From Our Most Popular Courses
                     </h2>
 
-                    <p className="text-slate-600 max-w-2xl mx-auto text-sm">
+                    <p className="text-[var(--text-secondary)] max-w-2xl mx-auto text-base leading-relaxed">
                         Explore our latest professional courses designed by experienced instructors to help you master in-demand skills.
                     </p>
                 </div>
 
                 {/* Course Cards Grid - 3 columns for featured courses */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                     {courses.map((course) => (
                         <Link
                             href={`/courses/${course._id}`}
                             key={course._id}
                             className="group h-full"
                         >
-                            <div className="h-full bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col border border-slate-100/60 hover:border-blue-200">
+                            <div className="h-full bg-[var(--surface)] rounded-[var(--radius-lg)] overflow-hidden shadow-sm hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1 flex flex-col border border-[var(--border)]">
 
                                 {/* Image Container - Smaller Height */}
                                 <div className="relative overflow-hidden bg-gradient-to-br from-slate-200 to-slate-300 h-40">
@@ -128,7 +128,7 @@ export default async function FeaturedCourses() {
                 <div className="text-center">
                     <Link
                         href="/courses"
-                        className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-7 py-3 rounded-lg font-semibold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                        className="inline-flex items-center justify-center gap-2 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white px-8 py-3.5 rounded-[var(--radius-md)] font-semibold transition-all duration-200 hover:shadow-md"
                     >
                         <span>View All Courses</span>
                         <ArrowRight size={16} />
