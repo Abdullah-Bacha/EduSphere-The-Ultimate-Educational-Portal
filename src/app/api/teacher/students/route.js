@@ -44,35 +44,42 @@ export async function GET(request) {
             User.countDocuments(query),
         ]);
 
-        // Augment students with their specific course enrollment progress
-        const augmentedStudents = await Promise.all(
-            students.map(async (student) => {
-                // Find progress records for this student on the teacher's courses
-                const studentProgress = await Progress.find({
-                    student: student._id,
-                    course: { $in: courseIds },
-                })
-                    .populate({
-                        path: "course",
-                        select: "title",
-                    })
-                    .lean();
+        const studentIds = students.map((s) => s._id);
 
-                const coursesProgress = studentProgress.map((p) => ({
-                    courseId: p.course?._id?.toString(),
-                    courseTitle: p.course?.title,
-                    completionPercentage: p.completionPercentage,
-                    completedLessonsCount: p.completedLessons?.length || 0,
-                }));
+        // Fetch ALL progress for these students in single query
+        const allProgress = await Progress.find({
+            student: { $in: studentIds },
+            course: { $in: courseIds },
+        })
+            .populate("course", "title")
+            .lean();
 
-                return {
-                    ...student,
-                    _id: student._id.toString(),
-                    id: student._id.toString(),
-                    coursesProgress,
-                };
-            })
-        );
+        // Group progress by student for easy lookup
+        const progressByStudent = {};
+        allProgress.forEach((p) => {
+            const studentIdStr = p.student.toString();
+            if (!progressByStudent[studentIdStr]) {
+                progressByStudent[studentIdStr] = [];
+            }
+            progressByStudent[studentIdStr].push(p);
+        });
+
+        const augmentedStudents = students.map((student) => {
+            const studentProgress = progressByStudent[student._id.toString()] || [];
+            const coursesProgress = studentProgress.map((p) => ({
+                courseId: p.course?._id?.toString(),
+                courseTitle: p.course?.title,
+                completionPercentage: p.completionPercentage,
+                completedLessonsCount: p.completedLessons?.length || 0,
+            }));
+
+            return {
+                ...student,
+                _id: student._id.toString(),
+                id: student._id.toString(),
+                coursesProgress,
+            };
+        });
 
         return NextResponse.json({
             success: true,

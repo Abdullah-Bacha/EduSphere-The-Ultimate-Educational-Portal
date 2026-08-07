@@ -3,54 +3,46 @@ import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import { generateToken } from "@/lib/jwt";
-import { rateLimit } from "@/lib/rateLimiter";
 import { ValidationError, handleApiError } from "@/lib/apiError";
 
 export async function POST(request) {
     try {
-        const { email, password } = await request.json();
+        const { name, email, password, role = "student" } = await request.json();
 
-        if (!email || !password) {
-            throw new ValidationError("Email and password are required");
+        if (!name || !email || !password) {
+            throw new ValidationError("Name, email, and password are required");
         }
 
-        const rateLimitCheck = rateLimit(email, 5, 15 * 60 * 1000);
-        if (rateLimitCheck.limited) {
-            return NextResponse.json(
-                { success: false, message: rateLimitCheck.message },
-                { status: 429 }
-            );
+        if (password.length < 6) {
+            throw new ValidationError("Password must be at least 6 characters");
         }
 
         await dbConnect();
 
-        const user = await User.findOne({ email });
-
-        if (!user) {
+        // Check if user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
             return NextResponse.json(
-                {
-                    success: false,
-                    message: "Invalid Email or Password",
-                },
-                { status: 401 }
+                { success: false, message: "Email already registered" },
+                { status: 400 }
             );
         }
 
-        const isMatch = await bcrypt.compare(
-            password,
-            user.password
-        );
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
 
-        if (!isMatch) {
-            return NextResponse.json(
-                {
-                    success: false,
-                    message: "Invalid Email or Password",
-                },
-                { status: 401 }
-            );
-        }
+        // Create new user
+        const user = new User({
+            name,
+            email,
+            password: hashedPassword,
+            role,
+            status: "Active",
+        });
 
+        await user.save();
+
+        // Generate token
         const token = generateToken({
             id: user._id,
             name: user.name,
@@ -58,9 +50,10 @@ export async function POST(request) {
             role: user.role,
         });
 
+        // Set cookie
         const response = NextResponse.json({
             success: true,
-            message: "Login Successful",
+            message: "Registration successful",
             token,
             user: {
                 id: user._id,
@@ -79,7 +72,6 @@ export async function POST(request) {
         });
 
         return response;
-
     } catch (error) {
         return handleApiError(error);
     }

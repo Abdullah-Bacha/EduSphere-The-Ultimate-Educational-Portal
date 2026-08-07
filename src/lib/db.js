@@ -18,26 +18,26 @@ if (!cached) {
 export async function connectDB() {
     // Already connected
     if (cached.conn) {
-        console.log("✅ MongoDB already connected");
+        if (process.env.NODE_ENV === "development") {
+            console.log("✅ MongoDB already connected");
+        }
         return cached.conn;
     }
 
     // Create new connection
     if (!cached.promise) {
-        console.log("🔄 Connecting to MongoDB...");
-        console.log(
-            "URI:",
-            MONGODB_URI.replace(/\/\/(.*):(.*)@/, "//****:****@")
-        );
+        if (process.env.NODE_ENV === "development") {
+            console.log("🔄 Connecting to MongoDB...");
+        }
 
         const options = {
-            serverSelectionTimeoutMS: 45000, // 45 seconds
-            socketTimeoutMS: 60000, // 60 seconds
+            serverSelectionTimeoutMS: 45000,
+            socketTimeoutMS: 60000,
             maxPoolSize: 10,
             minPoolSize: 2,
             retryWrites: true,
             retryReads: true,
-            family: 4, // Force IPv4, skip IPv6 DNS issues
+            family: 4,
             ssl: true,
             authSource: "admin",
         };
@@ -48,19 +48,14 @@ export async function connectDB() {
     try {
         cached.conn = await cached.promise;
 
-        console.log("✅ MongoDB Connected Successfully");
+        if (process.env.NODE_ENV === "development") {
+            console.log("✅ MongoDB Connected Successfully");
+        }
 
         return cached.conn;
     } catch (error) {
-        console.error("❌ MongoDB Connection Failed");
-        console.error("Name:", error.name);
-        console.error("Message:", error.message);
-        console.error("Code:", error.code);
-        console.error("Cause:", error.cause);
-        console.error(error);
-
+        console.error("[MongoDB Error]", error.message);
         cached.promise = null;
-
         throw error;
     }
 }

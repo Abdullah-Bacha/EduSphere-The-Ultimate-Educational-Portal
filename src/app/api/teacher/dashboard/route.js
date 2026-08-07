@@ -43,55 +43,86 @@ export async function GET() {
 
         const courseIds = courses.map((c) => c._id);
 
-        // 2. Fetch unique students enrolled in these courses
-        const totalStudents = await User.countDocuments({
-            role: "student",
-            enrolledCourses: { $in: courseIds },
-        });
+        // 2-4. Fetch all stats in parallel using aggregation (NOT N+1)
+        const [
+            totalStudentsResult,
+            assignmentStats,
+            totalQuizzesResult,
+            enrollmentCounts,
+            lessonCounts,
+            assignmentCounts,
+            progressData,
+        ] = await Promise.all([
+            User.countDocuments({
+                role: "student",
+                enrolledCourses: { $in: courseIds },
+            }),
+            AssignmentSubmission.aggregate([
+                { $match: { status: "Submitted" } },
+                { $lookup: { from: "assignments", localField: "assignment", foreignField: "_id", as: "assignmentData" } },
+                { $unwind: "$assignmentData" },
+                { $match: { "assignmentData.course": { $in: courseIds } } },
+                { $count: "count" },
+            ]),
+            Quiz.countDocuments({ course: { $in: courseIds } }),
+            User.aggregate([
+                { $match: { role: "student" } },
+                { $unwind: "$enrolledCourses" },
+                { $group: { _id: "$enrolledCourses", count: { $sum: 1 } } },
+            ]),
+            Lesson.aggregate([
+                { $match: { course: { $in: courseIds } } },
+                { $group: { _id: "$course", count: { $sum: 1 } } },
+            ]),
+            Assignment.aggregate([
+                { $match: { course: { $in: courseIds } } },
+                { $group: { _id: "$course", count: { $sum: 1 } } },
+            ]),
+            Progress.find({ course: { $in: courseIds } })
+                .select("course completionPercentage")
+                .lean(),
+        ]);
 
-        // 3. Fetch pending assignments to grade
-        const assignments = await Assignment.find({ course: { $in: courseIds } }).lean();
-        const assignmentIds = assignments.map((a) => a._id);
-        const pendingAssignments = await AssignmentSubmission.countDocuments({
-            assignment: { $in: assignmentIds },
-            status: "Submitted",
-        });
+        const totalStudents = totalStudentsResult;
+        const pendingAssignments = assignmentStats[0]?.count || 0;
+        const totalQuizzes = totalQuizzesResult;
 
-        // 4. Fetch total quizzes in these courses
-        const totalQuizzes = await Quiz.countDocuments({
-            course: { $in: courseIds },
-        });
-
-        // 5. Fetch recent courses list with student enrollment counts
-        const courseStats = await Promise.all(
-            courses.map(async (course) => {
-                const [count, lessonCount, assignmentCount, progressRecords] = await Promise.all([
-                    User.countDocuments({ role: "student", enrolledCourses: course._id }),
-                    Lesson.countDocuments({ course: course._id }),
-                    Assignment.countDocuments({ course: course._id }),
-                    Progress.find({ course: course._id }).select("completionPercentage").lean(),
-                ]);
-
-                const completionPercentage = progressRecords.length > 0
-                    ? Math.round(
-                          progressRecords.reduce((sum, p) => sum + (p.completionPercentage || 0), 0) /
-                              progressRecords.length
-                      )
-                    : 0;
-
-                return {
-                    ...course,
-                    _id: course._id.toString(),
-                    id: course._id.toString(),
-                    studentCount: count,
-                    completion: completionPercentage,
-                    lessonCount,
-                    assignmentCount,
-                };
-            })
+        const enrollmentMap = new Map(
+            enrollmentCounts.map((e) => [e._id.toString(), e.count])
+        );
+        const lessonMap = new Map(lessonCounts.map((l) => [l._id.toString(), l.count]));
+        const assignmentMap = new Map(
+            assignmentCounts.map((a) => [a._id.toString(), a.count])
         );
 
-        // 6. Fetch pending submissions with details
+        const progressByCourse = {};
+        progressData.forEach((p) => {
+            const courseId = p.course.toString();
+            if (!progressByCourse[courseId]) {
+                progressByCourse[courseId] = [];
+            }
+            progressByCourse[courseId].push(p.completionPercentage || 0);
+        });
+
+        const courseStats = courses.map((course) => {
+            const courseIdStr = course._id.toString();
+            const completionPercentages = progressByCourse[courseIdStr] || [];
+            const completionPercentage = completionPercentages.length
+                ? Math.round(completionPercentages.reduce((a, b) => a + b, 0) / completionPercentages.length)
+                : 0;
+
+            return {
+                ...course,
+                _id: courseIdStr,
+                id: courseIdStr,
+                studentCount: enrollmentMap.get(courseIdStr) || 0,
+                completion: completionPercentage,
+                lessonCount: lessonMap.get(courseIdStr) || 0,
+                assignmentCount: assignmentMap.get(courseIdStr) || 0,
+            };
+        });
+
+        // 6. Fetch pending submissions with details (pre-fetch courses to avoid N+1)
         const pendingSubmissions = await AssignmentSubmission.find({
             assignment: { $in: assignmentIds },
             status: "Submitted",
@@ -101,37 +132,22 @@ export async function GET() {
             .limit(5)
             .lean();
 
-        const submissionsWithCourses = await Promise.all(
-            pendingSubmissions.map(async (sub) => {
-                try {
-                    const assignmentCourseId = sub.assignment?.course || courseIds[0];
-                    const course = assignmentCourseId
-                        ? await Course.findById(assignmentCourseId).lean()
-                        : null;
+        const courseMap = new Map(courses.map((c) => [c._id.toString(), c]));
+        const submissionsWithCourses = pendingSubmissions.map((sub) => {
+            const assignmentCourseId = sub.assignment?.course;
+            const course = courseMap.get(assignmentCourseId?.toString()) || { title: "Unknown Course" };
 
-                    return {
-                        ...sub,
-                        _id: sub._id.toString(),
-                        assignmentTitle: sub.assignment?.title || "Unknown Assignment",
-                        studentName: sub.student?.name || "Student",
-                        courseName: course?.title || "Unknown Course",
-                        dueDate: sub.assignment?.dueDate || new Date(),
-                    };
-                } catch (err) {
-                    console.error("Error processing submission:", err);
-                    return {
-                        ...sub,
-                        _id: sub._id.toString(),
-                        assignmentTitle: sub.assignment?.title || "Unknown Assignment",
-                        studentName: sub.student?.name || "Student",
-                        courseName: "Unknown Course",
-                        dueDate: sub.assignment?.dueDate || new Date(),
-                    };
-                }
-            })
-        );
+            return {
+                ...sub,
+                _id: sub._id.toString(),
+                assignmentTitle: sub.assignment?.title || "Unknown Assignment",
+                studentName: sub.student?.name || "Student",
+                courseName: course.title || "Unknown Course",
+                dueDate: sub.assignment?.dueDate || new Date(),
+            };
+        });
 
-        // 7. Fetch recent activities
+        // 7. Fetch recent activities (using pre-fetched courseMap to avoid N+1)
         const recentSubmissions = await AssignmentSubmission.find({
             assignment: { $in: assignmentIds },
         })
@@ -141,31 +157,17 @@ export async function GET() {
             .limit(5)
             .lean();
 
-        const recentActivities = await Promise.all(
-            recentSubmissions.map(async (sub) => {
-                try {
-                    const assignmentCourseId = sub.assignment?.course || courseIds[0];
-                    const course = assignmentCourseId
-                        ? await Course.findById(assignmentCourseId).lean()
-                        : null;
+        const recentActivities = recentSubmissions.map((sub) => {
+            const assignmentCourseId = sub.assignment?.course;
+            const course = courseMap.get(assignmentCourseId?.toString()) || { title: "Unknown Course" };
 
-                    return {
-                        _id: sub._id.toString(),
-                        activity: `${sub.student?.name || "Student"} submitted "${sub.assignment?.title || "Assignment"}"`,
-                        courseName: course?.title || "Unknown Course",
-                        timestamp: sub.createdAt || new Date(),
-                    };
-                } catch (err) {
-                    console.error("Error processing activity:", err);
-                    return {
-                        _id: sub._id.toString(),
-                        activity: `${sub.student?.name || "Student"} submitted "${sub.assignment?.title || "Assignment"}"`,
-                        courseName: "Unknown Course",
-                        timestamp: sub.createdAt || new Date(),
-                    };
-                }
-            })
-        );
+            return {
+                _id: sub._id.toString(),
+                activity: `${sub.student?.name || "Student"} submitted "${sub.assignment?.title || "Assignment"}"`,
+                courseName: course.title || "Unknown Course",
+                timestamp: sub.createdAt || new Date(),
+            };
+        });
 
         return NextResponse.json({
             success: true,

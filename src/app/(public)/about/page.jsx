@@ -57,7 +57,7 @@ export default function AboutPage() {
                         <div className="flex justify-center">
                             <div className="relative bg-[var(--surface)] rounded-[var(--radius-lg)] shadow-card p-6 border border-[var(--border)]">
                                 <Image
-                                    src="/images/hero.svg"
+                                    src="/images/Student learning.png"
                                     alt="About LMS University"
                                     width={450}
                                     height={450}

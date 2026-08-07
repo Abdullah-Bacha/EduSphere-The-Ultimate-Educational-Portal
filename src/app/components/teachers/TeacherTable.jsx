@@ -5,100 +5,79 @@ import TeacherActions from "./TeacherActions";
 
 const DEFAULT_AVATAR = "/images/abd.jpeg";
 
-function formatDate(value) {
-    if (!value) return "—";
-    const date = new Date(value);
-    if (Number.isNaN(date.getTime())) return "—";
-    return date.toLocaleDateString();
-}
-
 export default function TeacherTable({ teachers, onDelete }) {
     return (
-        <div className="w-full">
-            <div className="px-6 py-5 bg-slate-50/95 border-b border-slate-200/70">
-                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                    <h2 className="text-xl font-semibold text-slate-900">Teacher Cards</h2>
-                    <p className="text-sm text-slate-500">
-                        Total records: <span className="font-semibold text-slate-900">{teachers.length}</span>
-                    </p>
-                </div>
-            </div>
-
-            {teachers.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-                    {teachers.map((teacher) => (
-                        <div
-                            key={teacher._id}
-                            className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col"
-                        >
-                            {/* Avatar Section - Image at top, no centering padding */}
-                            <div className="h-48 bg-gradient-to-br from-blue-100 to-blue-50 overflow-hidden flex-shrink-0">
-                                {teacher.image ? (
-                                    <img
-                                        src={teacher.image}
-                                        alt={teacher.name}
-                                        className="h-full w-full object-cover"
-                                        style={{ objectPosition: "center top" }}
-                                        onError={(e) => {
-                                            e.currentTarget.src = DEFAULT_AVATAR;
-                                        }}
-                                    />
-                                ) : (
-                                    <img
-                                        src={DEFAULT_AVATAR}
-                                        alt="Default avatar"
-                                        className="h-full w-full object-cover"
-                                        style={{ objectPosition: "center top" }}
-                                    />
-                                )}
-                            </div>
-
-                            {/* Content Section */}
-                            <div className="p-5 flex flex-col flex-grow">
-                                <h3 className="text-lg font-bold text-slate-900 mb-1">
-                                    {teacher.name}
-                                </h3>
-
-                                <p className="text-sm text-slate-600 mb-3">
-                                    {teacher.bio || "No bio added"}
-                                </p>
-
-                                <div className="space-y-2 text-xs text-slate-500 mb-4 flex-grow">
-                                    <div className="truncate">
-                                        <span className="font-semibold">Email:</span> {teacher.email}
+        <div className="w-full overflow-x-auto">
+            <table className="w-full">
+                <thead>
+                    <tr className="border-b border-slate-200/70 bg-slate-50/95">
+                        <th className="px-6 py-4 text-left text-sm font-semibold text-slate-900">Name</th>
+                        <th className="px-6 py-4 text-left text-sm font-semibold text-slate-900">Email</th>
+                        <th className="px-6 py-4 text-left text-sm font-semibold text-slate-900">Phone</th>
+                        <th className="px-6 py-4 text-left text-sm font-semibold text-slate-900">Status</th>
+                        <th className="px-6 py-4 text-right text-sm font-semibold text-slate-900">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {teachers.length > 0 ? (
+                        teachers.map((teacher) => (
+                            <tr
+                                key={teacher._id}
+                                className="border-b border-slate-100 hover:bg-slate-50/50 transition-colors"
+                            >
+                                <td className="px-6 py-4">
+                                    <div className="flex items-center gap-3">
+                                        <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 overflow-hidden flex-shrink-0 flex items-center justify-center">
+                                            {teacher.image ? (
+                                                <img
+                                                    src={teacher.image}
+                                                    alt={teacher.name}
+                                                    className="h-full w-full object-cover"
+                                                    onError={(e) => {
+                                                        e.currentTarget.src = DEFAULT_AVATAR;
+                                                    }}
+                                                />
+                                            ) : (
+                                                <img
+                                                    src={DEFAULT_AVATAR}
+                                                    alt="Default avatar"
+                                                    className="h-full w-full object-cover"
+                                                />
+                                            )}
+                                        </div>
+                                        <span className="text-sm font-semibold text-slate-900">{teacher.name}</span>
                                     </div>
-                                    <div>
-                                        <span className="font-semibold">Phone:</span> {teacher.phone || "—"}
-                                    </div>
-                                    <div>
-                                        <span
-                                            className={`inline-flex items-center rounded-md px-2.5 py-1 text-xs font-semibold ring-1 ring-inset mt-2 ${
-                                                teacher.status === "Active"
-                                                    ? "bg-emerald-50 text-emerald-700 ring-emerald-600/10"
-                                                    : "bg-slate-50 text-slate-600 ring-slate-500/10"
-                                            }`}
-                                        >
-                                            {teacher.status || "Active"}
-                                        </span>
-                                    </div>
-                                </div>
-
-                                {/* Actions */}
-                                <div className="border-t border-slate-100 pt-4">
+                                </td>
+                                <td className="px-6 py-4 text-sm text-slate-600 truncate">{teacher.email}</td>
+                                <td className="px-6 py-4 text-sm text-slate-600">{teacher.phone || "—"}</td>
+                                <td className="px-6 py-4">
+                                    <span
+                                        className={`inline-flex items-center rounded-md px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${
+                                            teacher.status === "Active"
+                                                ? "bg-emerald-50 text-emerald-700 ring-emerald-600/10"
+                                                : "bg-slate-50 text-slate-600 ring-slate-500/10"
+                                        }`}
+                                    >
+                                        {teacher.status || "Active"}
+                                    </span>
+                                </td>
+                                <td className="px-6 py-4 text-right">
                                     <TeacherActions
                                         teacher={teacher}
                                         onDelete={onDelete}
                                     />
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <div className="p-12 text-center text-slate-400">
-                    No teachers found
-                </div>
-            )}
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="5" className="px-6 py-12 text-center text-slate-400">
+                                No teachers found
+                            </td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
         </div>
     );
 }

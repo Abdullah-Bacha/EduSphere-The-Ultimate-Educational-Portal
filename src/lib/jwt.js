@@ -1,8 +1,10 @@
 import jwt from "jsonwebtoken";
-import { jwtVerify } from "jose";
 
-const JWT_SECRET =
-    process.env.JWT_SECRET || "my_super_secret_key";
+const JWT_SECRET = process.env.JWT_SECRET;
+
+if (!JWT_SECRET) {
+    throw new Error("JWT_SECRET environment variable is required and must be at least 32 characters");
+}
 
 export function generateToken(payload) {
     return jwt.sign(payload, JWT_SECRET, {

@@ -22,7 +22,7 @@ export default async function HeroSection() {
     const stats = await getHeroStats();
 
     return (
-        <section className="relative overflow-hidden pt-20 pb-32 lg:pt-32 lg:pb-40" style={{ background: "linear-gradient(135deg, #e8eef8 0%, #f0e8f8 50%, #e8f4f8 100%)" }}>
+        <section className="relative overflow-hidden pt-20 pb-32 lg:pt-1 lg:pb-14" style={{ background: "linear-gradient(135deg, #e8eef8 0%, #f0e8f8 50%, #e8f4f8 100%)" }}>
             {/* Decorative dot pattern */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
                 <div className="absolute top-20 left-10 w-1 h-1 bg-blue-400 rounded-full"></div>
@@ -32,16 +32,16 @@ export default async function HeroSection() {
             </div>
 
             <Container className="relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 items-center">
                     {/* Left Content */}
-                    <div className="space-y-8">
+                    <div className="space-y-6">
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 border border-blue-200">
                             <span className="inline-block w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
                             <span className="text-xs font-semibold text-blue-600">Welcome to EduLMS</span>
                         </div>
 
                         <div className="space-y-6">
-                            <h1 className="text-5xl lg:text-6xl font-black leading-tight">
+                            <h1 className="text-5xl lg:text-5xl font-black leading-tight">
                                 Learn Today, <span className="text-blue-600">Lead Tomorrow</span>
                             </h1>
                             <p className="text-base text-gray-600 leading-relaxed max-w-md">
@@ -49,7 +49,7 @@ export default async function HeroSection() {
                             </p>
                         </div>
 
-                        <div className="flex flex-wrap gap-3 pt-4">
+                        <div className="flex flex-wrap gap-3 pt-2">
                             <Link href="/courses">
                                 <Button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all hover:shadow-lg flex items-center gap-2 border border-blue-600">
                                     Explore Courses
@@ -64,7 +64,7 @@ export default async function HeroSection() {
                         </div>
 
                         {/* Stats */}
-                        <div className="flex gap-8 pt-8">
+                        <div className="flex gap-8">
                             <div>
                                 <div className="text-2xl font-black text-black">{stats.students}K+</div>
                                 <div className="text-sm text-gray-500">Students</div>
@@ -111,7 +111,7 @@ export default async function HeroSection() {
 
                             {/* Floating Stat Card - Top Right */}
                             <div
-                                className="absolute top-0 right-0 bg-white rounded-xl shadow-md px-4 py-3 z-10 w-max"
+                                className="absolute top-8 right-14 bg-white rounded-xl shadow-md px-4 py-3 z-10 w-max"
                                 style={{
                                     animation: 'float 3s ease-in-out infinite',
                                     animationDelay: '0.4s'
@@ -128,14 +128,14 @@ export default async function HeroSection() {
 
                             {/* Floating Stat Card - Middle Right */}
                             <div
-                                className="absolute top-1/3 -right-8 bg-white rounded-xl shadow-md px-4 py-3 z-10 w-max"
+                                className="absolute top-1/3 -right-1 bg-white rounded-xl shadow-md px-4 py-3 z-10 w-max"
                                 style={{
                                     animation: 'float 3s ease-in-out infinite',
                                     animationDelay: '0.2s'
                                 }}
                             >
                                 <div className="flex items-center gap-2">
-                                    <div className="w-6 h-6 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 text-xs font-bold">⭐</div>
+                                    <div className="w-6 h-6 bg-amber-100 rounded-full flex items-center justify-center text-amber-600 text-xs font-bold ">⭐</div>
                                     <div>
                                         <div className="text-sm font-bold text-gray-900">4.9★</div>
                                         <div className="text-xs text-gray-600">Learning</div>
@@ -145,7 +145,7 @@ export default async function HeroSection() {
 
                             {/* Floating Stat Card - Bottom Right */}
                             <div
-                                className="absolute -bottom-4 right-0 bg-white rounded-xl shadow-md px-4 py-3 z-10 w-max"
+                                className="absolute bottom-18 right-0 bg-white rounded-xl shadow-md px-4 py-3 z-10 w-max"
                                 style={{
                                     animation: 'float 3s ease-in-out infinite',
                                     animationDelay: '0.6s'

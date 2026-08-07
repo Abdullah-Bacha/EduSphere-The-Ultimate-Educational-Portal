@@ -1,16 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/auth";
-
-import {
-    getTeachers,
-    createTeacher,
-} from "../../../services/teacherService";
-
-function authErrorStatus(error) {
-    if (error.message === "Unauthorized") return 401;
-    if (error.message === "Forbidden") return 403;
-    return 500;
-}
+import { getTeachers, createTeacher } from "@/services/teacherService";
+import { handleApiError } from "@/lib/apiError";
 
 export async function GET(request) {
     try {
@@ -25,13 +16,7 @@ export async function GET(request) {
             result: teachers,
         });
     } catch (error) {
-        return NextResponse.json(
-            {
-                success: false,
-                message: error.message,
-            },
-            { status: authErrorStatus(error) }
-        );
+        return handleApiError(error);
     }
 }
 
@@ -51,12 +36,6 @@ export async function POST(request) {
             { status: 201 }
         );
     } catch (error) {
-        return NextResponse.json(
-            {
-                success: false,
-                message: error.message,
-            },
-            { status: authErrorStatus(error) }
-        );
+        return handleApiError(error);
     }
 }

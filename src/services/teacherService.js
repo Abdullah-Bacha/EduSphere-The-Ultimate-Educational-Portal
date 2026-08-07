@@ -142,8 +142,6 @@ export async function getFeaturedTeachers(limit = 4) {
 
     const teachers = await User.find({
         role: "teacher",
-        status: "Active",
-        isFeatured: true,
     })
         .sort({ createdAt: -1 })
         .limit(limit)

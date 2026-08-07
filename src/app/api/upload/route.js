@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
+import { handleApiError, ValidationError, AuthError } from "@/lib/apiError";
 
 export const dynamic = "force-dynamic";
 
@@ -25,21 +26,29 @@ export async function POST(request) {
         const file = formData.get("file");
 
         if (!file || typeof file === "string") {
-            return NextResponse.json({ success: false, message: "No file provided" }, { status: 400 });
+            throw new ValidationError("No file provided");
+        }
+
+        if (!file.name || typeof file.name !== "string") {
+            throw new ValidationError("Invalid file name");
         }
 
         if (file.size > MAX_SIZE) {
-            return NextResponse.json({ success: false, message: "File too large (max 10 MB)" }, { status: 400 });
+            throw new ValidationError("File too large (max 10 MB)");
         }
 
         if (!ALLOWED_TYPES.includes(file.type)) {
-            return NextResponse.json({ success: false, message: "File type not allowed" }, { status: 400 });
+            throw new ValidationError("File type not allowed. Allowed types: PDF, Images, Documents, Zip");
         }
 
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
 
         const ext = file.name.split(".").pop()?.toLowerCase() || "bin";
+        if (!ext.match(/^[a-z0-9]{2,5}$/i)) {
+            throw new ValidationError("Invalid file extension");
+        }
+
         const safeName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
         const uploadDir = path.join(process.cwd(), "public", "uploads", "assignments");
@@ -47,9 +56,8 @@ export async function POST(request) {
         await writeFile(path.join(uploadDir, safeName), buffer);
 
         const url = `/uploads/assignments/${safeName}`;
-        return NextResponse.json({ success: true, result: { url, name: file.name, size: file.size } });
+        return NextResponse.json({ success: true, result: { url, name: file.name, size: file.size } }, { status: 200 });
     } catch (error) {
-        const status = error.message === "Unauthorized" ? 401 : 500;
-        return NextResponse.json({ success: false, message: error.message }, { status });
+        return handleApiError(error);
     }
 }

@@ -1,30 +1,54 @@
 import Container from "../ui/Container";
-import { GraduationCap, BookOpen, Laptop, Award } from "lucide-react";
+import { Lock, Lightbulb, Trophy, Users, Monitor, Library, Clock, Headphones } from "lucide-react";
 
 const features = [
     {
-        icon: GraduationCap,
-        title: "Expert Teachers",
-        description: "Learn from experienced instructors with practical industry knowledge and years of teaching excellence.",
+        icon: Lock,
+        title: "Secure & Safe",
+        description: "Your data and learning environment are protected with industry-standard security measures.",
         gradient: "from-blue-500 to-indigo-500",
     },
     {
-        icon: BookOpen,
-        title: "Modern Courses",
-        description: "Industry-focused curriculum designed for real-world skills that employers actually look for.",
-        gradient: "from-violet-500 to-purple-500",
+        icon: Lightbulb,
+        title: "Quality Education",
+        description: "Premium content curated by experts to ensure highest standards of learning.",
+        gradient: "from-amber-500 to-orange-500",
     },
     {
-        icon: Laptop,
-        title: "Learn Anywhere",
-        description: "Study at your own pace on any device — desktop, tablet, or mobile — with zero app required.",
+        icon: Trophy,
+        title: "Certified Courses",
+        description: "Earn recognized certificates upon completion that enhance your professional credentials.",
+        gradient: "from-emerald-500 to-teal-500",
+    },
+    {
+        icon: Users,
+        title: "Expert Teachers",
+        description: "Learn from experienced instructors with practical industry knowledge and years of teaching excellence.",
+        gradient: "from-purple-500 to-violet-500",
+    },
+    {
+        icon: Monitor,
+        title: "Live Classes",
+        description: "Engage in interactive live sessions with instructors and fellow learners in real-time.",
+        gradient: "from-rose-500 to-pink-500",
+    },
+    {
+        icon: Library,
+        title: "Online Catalog",
+        description: "Access a comprehensive catalog of courses across multiple subjects and skill levels.",
         gradient: "from-cyan-500 to-sky-500",
     },
     {
-        icon: Award,
-        title: "Earn Certificates",
-        description: "Receive a verified certificate upon completion that you can share on LinkedIn and your CV.",
-        gradient: "from-emerald-500 to-teal-500",
+        icon: Clock,
+        title: "Flexible Learning",
+        description: "Study at your own pace, anytime, anywhere with no time constraints or deadlines.",
+        gradient: "from-fuchsia-500 to-purple-500",
+    },
+    {
+        icon: Headphones,
+        title: "Student Support",
+        description: "24/7 dedicated support team ready to help you with any questions or issues.",
+        gradient: "from-indigo-500 to-blue-500",
     },
 ];
 
@@ -37,7 +61,7 @@ export default function WhyChooseUs() {
                         <span className="inline-block w-2 h-2 bg-blue-600 rounded-full"></span>
                         <span className="text-blue-600 font-semibold text-xs uppercase tracking-widest">Why Choose Us</span>
                     </div>
-                    <h2 className="mt-4 text-4xl lg:text-5xl font-bold text-gray-900">
+                    <h2 className="mt-4 text-3xl lg:text-3xl font-bold text-gray-900">
                         Everything you need to build your future
                     </h2>
                     <p className="mt-6 text-gray-600 leading-relaxed text-base">

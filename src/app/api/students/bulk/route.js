@@ -1,17 +1,35 @@
 import { NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/auth";
 import { bulkStudentAction } from "@/services/studentService";
+import { validateArray, validateObjectId } from "@/validations/commonValidation";
+import { handleApiError, ValidationError } from "@/lib/apiError";
 
-function authErrorStatus(error) {
-    if (error.message === "Unauthorized") return 401;
-    if (error.message === "Forbidden") return 403;
-    return 500;
-}
+const ALLOWED_ACTIONS = ["activate", "deactivate", "delete"];
 
 export async function POST(request) {
     try {
         await requireAdmin();
         const body = await request.json();
+
+        if (!body.ids || !body.action) {
+            throw new ValidationError("Missing required fields: ids and action");
+        }
+
+        const idsValidation = validateArray(body.ids, "ids", 500);
+        if (!idsValidation.valid) {
+            throw new ValidationError(idsValidation.error);
+        }
+
+        if (!ALLOWED_ACTIONS.includes(body.action)) {
+            throw new ValidationError(`Invalid action. Must be one of: ${ALLOWED_ACTIONS.join(", ")}`);
+        }
+
+        for (const id of body.ids) {
+            const idValidation = validateObjectId(id, "Student ID");
+            if (!idValidation.valid) {
+                throw new ValidationError(idValidation.error);
+            }
+        }
 
         const result = await bulkStudentAction(body.ids, body.action);
 
@@ -21,11 +39,6 @@ export async function POST(request) {
             message: `${result.modified} student(s) updated.`,
         });
     } catch (error) {
-        const status =
-            error.message === "Invalid action" ? 400 : authErrorStatus(error);
-        return NextResponse.json(
-            { success: false, message: error.message },
-            { status }
-        );
+        return handleApiError(error);
     }
 }

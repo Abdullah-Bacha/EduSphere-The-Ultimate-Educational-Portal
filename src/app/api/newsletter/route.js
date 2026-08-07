@@ -1,24 +1,34 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect";
 import NewsletterSubscriber from "@/models/NewsletterSubscriber";
-
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+import { rateLimit } from "@/lib/rateLimiter";
+import { validateEmail, handleApiError } from "@/lib/apiError";
+import { ValidationError } from "@/lib/apiError";
 
 export async function POST(request) {
     try {
-        await dbConnect();
-
         const { email } = await request.json();
         const normalized = (email || "").trim().toLowerCase();
 
-        if (!EMAIL_REGEX.test(normalized)) {
+        // Validate email format
+        const emailValidation = validateEmail(normalized);
+        if (!emailValidation.valid) {
+            throw new ValidationError(emailValidation.error);
+        }
+
+        // Rate limit newsletter subscriptions (3 attempts per IP per hour)
+        const clientIp = request.headers.get("x-forwarded-for") || "unknown";
+        const rateLimitCheck = rateLimit(`newsletter-${clientIp}`, 3, 60 * 60 * 1000);
+        if (rateLimitCheck.limited) {
             return NextResponse.json(
-                { success: false, message: "Please enter a valid email address." },
-                { status: 400 }
+                { success: false, message: "Too many subscription attempts. Please try again later." },
+                { status: 429 }
             );
         }
 
-        const existing = await NewsletterSubscriber.findOne({ email: normalized });
+        await dbConnect();
+
+        const existing = await NewsletterSubscriber.findOne({ email: normalized }).lean();
         if (existing) {
             return NextResponse.json({
                 success: true,
@@ -33,11 +43,7 @@ export async function POST(request) {
             message: "Thanks for subscribing!",
         });
     } catch (error) {
-        console.error("Newsletter subscribe error:", error);
-        return NextResponse.json(
-            { success: false, message: "Something went wrong. Please try again." },
-            { status: 500 }
-        );
+        return handleApiError(error);
     }
 }
 

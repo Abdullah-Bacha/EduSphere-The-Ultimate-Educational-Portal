@@ -62,28 +62,36 @@ export async function GET() {
         });
         const avgGrade = gradedSubmissions.length > 0 ? Math.round(totalPct / gradedSubmissions.length) : 0;
 
-        // 2. Course completion comparison
-        const courseCompletion = await Promise.all(
-            courses.map(async (course) => {
-                const progressRecords = await Progress.find({ course: course._id }).lean();
-                const avgCompletion = progressRecords.length > 0
-                    ? Math.round(
-                          progressRecords.reduce((sum, p) => sum + (p.completionPercentage || 0), 0) /
-                              progressRecords.length
-                      )
-                    : 0;
-                const studentCount = await User.countDocuments({
-                    role: "student",
-                    enrolledCourses: course._id,
-                });
-                return {
-                    courseId: course._id.toString(),
-                    title: course.title,
-                    completion: avgCompletion,
-                    studentCount,
-                };
-            })
+        // 2. Course completion comparison (use aggregation to avoid N+1)
+        const progressStats = await Progress.aggregate([
+            { $match: { course: { $in: courseIds } } },
+            { $group: {
+                _id: "$course",
+                avgCompletion: { $avg: "$completionPercentage" },
+            }},
+        ]);
+
+        const enrollmentStats = await User.aggregate([
+            { $match: { role: "student" } },
+            { $unwind: "$enrolledCourses" },
+            { $match: { enrolledCourses: { $in: courseIds } } },
+            { $group: { _id: "$enrolledCourses", studentCount: { $sum: 1 } } },
+        ]);
+
+        const progressMap = new Map(
+            progressStats.map((p) => [p._id.toString(), Math.round(p.avgCompletion || 0)])
         );
+        const enrollmentMap = new Map(enrollmentStats.map((e) => [e._id.toString(), e.studentCount]));
+
+        const courseCompletion = courses.map((course) => {
+            const courseIdStr = course._id.toString();
+            return {
+                courseId: courseIdStr,
+                title: course.title,
+                completion: progressMap.get(courseIdStr) || 0,
+                studentCount: enrollmentMap.get(courseIdStr) || 0,
+            };
+        });
 
         // 3. Submission trend over the last 8 weeks
         const now = new Date();
@@ -111,25 +119,35 @@ export async function GET() {
             };
         });
 
-        // 4. Quiz performance per quiz (avg %)
+        // 4. Quiz performance per quiz (use aggregation to avoid N+1)
         const quizzes = await Quiz.find({ course: { $in: courseIds } }).lean();
-        const quizPerformance = await Promise.all(
-            quizzes.map(async (quiz) => {
-                const attempts = await QuizAttempt.find({ quiz: quiz._id }).lean();
-                const avgPct = attempts.length > 0
-                    ? Math.round(
-                          attempts.reduce((sum, a) => sum + (a.score / a.totalQuestions) * 100, 0) /
-                              attempts.length
-                      )
-                    : 0;
+        const quizAttemptsStats = await QuizAttempt.aggregate([
+            { $match: { quiz: { $in: quizzes.map((q) => q._id) } } },
+            {
+                $group: {
+                    _id: "$quiz",
+                    avgScore: { $avg: { $divide: ["$score", "$totalQuestions"] } },
+                    attemptCount: { $sum: 1 },
+                },
+            },
+        ]);
+
+        const quizStatsMap = new Map(
+            quizAttemptsStats.map((q) => [q._id.toString(), { avgScore: q.avgScore, attempts: q.attemptCount }])
+        );
+
+        const quizPerformance = quizzes
+            .map((quiz) => {
+                const stats = quizStatsMap.get(quiz._id.toString());
+                if (!stats) return null;
                 return {
                     quizId: quiz._id.toString(),
                     title: quiz.title,
-                    avgScore: avgPct,
-                    attempts: attempts.length,
+                    avgScore: Math.round(stats.avgScore * 100),
+                    attempts: stats.attempts,
                 };
             })
-        );
+            .filter(Boolean);
 
         const totalStudents = await User.countDocuments({
             role: "student",

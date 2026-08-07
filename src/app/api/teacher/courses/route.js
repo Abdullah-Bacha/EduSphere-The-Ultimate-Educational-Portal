@@ -45,21 +45,28 @@ export async function GET(request) {
             Course.countDocuments(query),
         ]);
 
-        // Augment each course with its student count
-        const augmentedCourses = await Promise.all(
-            courses.map(async (course) => {
-                const studentCount = await User.countDocuments({
-                    role: "student",
-                    enrolledCourses: course._id,
-                });
-                return {
-                    ...course,
-                    _id: course._id.toString(),
-                    id: course._id.toString(),
-                    studentCount,
-                };
-            })
+        // Get all enrollment counts in single query using aggregation
+        const enrollmentCounts = await User.aggregate([
+            { $match: { role: "student" } },
+            { $unwind: "$enrolledCourses" },
+            {
+                $group: {
+                    _id: "$enrolledCourses",
+                    count: { $sum: 1 },
+                },
+            },
+        ]);
+
+        const countMap = new Map(
+            enrollmentCounts.map((e) => [e._id.toString(), e.count])
         );
+
+        const augmentedCourses = courses.map((course) => ({
+            ...course,
+            _id: course._id.toString(),
+            id: course._id.toString(),
+            studentCount: countMap.get(course._id.toString()) || 0,
+        }));
 
         return NextResponse.json({
             success: true,
@@ -72,8 +79,15 @@ export async function GET(request) {
             },
         });
     } catch (error) {
+        console.error("[teacher/courses]", error);
+        if (error.message === "Unauthorized" || error.message === "Forbidden") {
+            return NextResponse.json(
+                { success: false, message: error.message },
+                { status: error.message === "Unauthorized" ? 401 : 403 }
+            );
+        }
         return NextResponse.json(
-            { success: false, message: error.message },
+            { success: false, message: "Unable to fetch courses" },
             { status: 500 }
         );
     }

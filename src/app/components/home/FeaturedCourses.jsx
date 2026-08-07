@@ -6,7 +6,7 @@ export default async function FeaturedCourses() {
     const courses = await getFeaturedCourses(6);
 
     return (
-        <section className="py-24 bg-white">
+        <section className="py-12 bg-white">
             <div className="max-w-7xl mx-auto px-6">
                 {/* Header */}
                 <div className="text-center mb-16">
