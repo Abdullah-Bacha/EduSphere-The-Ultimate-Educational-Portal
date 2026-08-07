@@ -24,7 +24,9 @@ export default function StudentFeedbackPage() {
     }
 
     useEffect(() => {
-        load();
+        (async () => {
+            await load();
+        })();
     }, []);
 
     async function handleSubmit(e) {

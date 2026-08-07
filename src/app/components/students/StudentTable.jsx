@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { User as UserIcon } from "lucide-react";
 import StudentActions from "./StudentActions";
 
@@ -70,21 +71,23 @@ export default function StudentTable({
                                     />
                                 )}
                                 {student.image ? (
-                                    <img
+                                    <Image
                                         src={student.image}
                                         alt={student.name}
-                                        className="h-full w-full object-cover"
-                                        style={{ objectPosition: "center top" }}
+                                        fill
+                                        className="object-cover"
+                                        unoptimized
                                         onError={(e) => {
                                             e.currentTarget.src = DEFAULT_AVATAR;
                                         }}
                                     />
                                 ) : (
-                                    <img
+                                    <Image
                                         src={DEFAULT_AVATAR}
                                         alt="Default avatar"
-                                        className="h-full w-full object-cover"
-                                        style={{ objectPosition: "center top" }}
+                                        fill
+                                        className="object-cover"
+                                        unoptimized
                                     />
                                 )}
                             </div>

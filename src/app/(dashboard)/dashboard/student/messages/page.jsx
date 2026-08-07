@@ -53,7 +53,9 @@ export default function StudentMessagesPage() {
     }
 
     useEffect(() => {
-        loadContacts();
+        (async () => {
+            await loadContacts();
+        })();
     }, []);
 
     useEffect(() => {

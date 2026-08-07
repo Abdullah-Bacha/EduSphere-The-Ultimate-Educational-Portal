@@ -41,7 +41,9 @@ export default function MyCoursesPage() {
     }
 
     useEffect(() => {
-        loadCourses();
+        (async () => {
+            await loadCourses();
+        })();
     }, [search, category, level, page]);
 
     return (

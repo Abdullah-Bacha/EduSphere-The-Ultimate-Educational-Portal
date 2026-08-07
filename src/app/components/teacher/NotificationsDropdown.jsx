@@ -34,7 +34,9 @@ export default function NotificationsDropdown() {
     }
 
     useEffect(() => {
-        loadNotifications();
+        (async () => {
+            await loadNotifications();
+        })();
     }, []);
 
     const unreadCount = notifications.filter((n) => !n.isRead).length;

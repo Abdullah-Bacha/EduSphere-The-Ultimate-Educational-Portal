@@ -12,10 +12,12 @@ export default function StudentCourseCard({ course }) {
             {/* Thumbnail */}
             <div className="relative w-full h-48 bg-slate-100">
                 {course.thumbnail ? (
-                    <img
+                    <Image
                         src={course.thumbnail}
                         alt={course.title}
-                        className="object-cover w-full h-full"
+                        fill
+                        className="object-cover"
+                        unoptimized
                     />
                 ) : (
                     <div className="flex items-center justify-center w-full h-full text-slate-400">

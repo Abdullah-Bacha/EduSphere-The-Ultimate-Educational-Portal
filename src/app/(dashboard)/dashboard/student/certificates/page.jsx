@@ -59,25 +59,30 @@ function CertificatesContent() {
     }
 
     useEffect(() => {
-        loadCertificates();
+        (async () => {
+            await loadCertificates();
+        })();
     }, []);
 
     useEffect(() => {
-        if (courseId && certificates.length > 0) {
-            // Check if already exists in loaded list
-            const existing = certificates.find(c => c.course?._id === courseId);
-            if (existing) {
-                setSelectedCert(existing);
-                router.replace("/dashboard/student/certificates");
+        if (!courseId) return;
+
+        const checkAndGenerate = async () => {
+            if (certificates.length > 0) {
+                const existing = certificates.find(c => c.course?._id === courseId);
+                if (existing) {
+                    setSelectedCert(existing);
+                    router.replace("/dashboard/student/certificates");
+                } else {
+                    await handleGenerate(courseId);
+                }
             } else {
-                // Generate
-                handleGenerate(courseId);
+                await handleGenerate(courseId);
             }
-        } else if (courseId) {
-            // Generate directly if list hasn't loaded yet
-            handleGenerate(courseId);
-        }
-    }, [courseId, certificates]);
+        };
+
+        checkAndGenerate();
+    }, [courseId, certificates, router]);
 
     const handlePrint = () => {
         window.print();

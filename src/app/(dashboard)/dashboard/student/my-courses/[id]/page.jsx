@@ -133,10 +133,12 @@ export default function CourseDetailsPage() {
             <div className="flex flex-col md:flex-row gap-8 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
                 <div className="w-full md:w-1/3 aspect-video md:aspect-square relative rounded-xl overflow-hidden bg-slate-100 shrink-0">
                     {course.thumbnail ? (
-                        <img
+                        <Image
                             src={course.thumbnail}
                             alt={course.title}
-                            className="object-cover w-full h-full"
+                            fill
+                            className="object-cover"
+                            unoptimized
                         />
                     ) : (
                         <div className="flex items-center justify-center w-full h-full text-slate-400">

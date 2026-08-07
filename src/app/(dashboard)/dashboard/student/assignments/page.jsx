@@ -238,7 +238,7 @@ export default function AssignmentsPage() {
                         <div className="p-12 text-center bg-white rounded-xl shadow-sm border border-slate-100">
                             <div className="text-4xl mb-4">📝</div>
                             <h3 className="text-xl font-bold text-slate-800 mb-2">No pending assignments</h3>
-                            <p className="text-slate-500">You're all caught up! Continue learning in your courses.</p>
+                            <p className="text-slate-500">You&apos;re all caught up! Continue learning in your courses.</p>
                         </div>
                     ) : (
                         assignments.map((assignment) => {

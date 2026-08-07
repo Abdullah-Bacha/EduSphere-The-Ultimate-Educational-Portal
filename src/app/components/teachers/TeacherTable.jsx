@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { User as UserIcon } from "lucide-react";
 import TeacherActions from "./TeacherActions";
 
@@ -29,19 +30,25 @@ export default function TeacherTable({ teachers, onDelete }) {
                                     <div className="flex items-center gap-3">
                                         <div className="h-10 w-10 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 overflow-hidden flex-shrink-0 flex items-center justify-center">
                                             {teacher.image ? (
-                                                <img
+                                                <Image
                                                     src={teacher.image}
                                                     alt={teacher.name}
+                                                    width={40}
+                                                    height={40}
                                                     className="h-full w-full object-cover"
+                                                    unoptimized
                                                     onError={(e) => {
                                                         e.currentTarget.src = DEFAULT_AVATAR;
                                                     }}
                                                 />
                                             ) : (
-                                                <img
+                                                <Image
                                                     src={DEFAULT_AVATAR}
                                                     alt="Default avatar"
+                                                    width={40}
+                                                    height={40}
                                                     className="h-full w-full object-cover"
+                                                    unoptimized
                                                 />
                                             )}
                                         </div>

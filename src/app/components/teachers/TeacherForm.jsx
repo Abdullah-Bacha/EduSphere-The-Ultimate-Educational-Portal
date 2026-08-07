@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { User, Mail, Lock, Phone, FileText, CheckCircle, Star, ImageIcon } from "lucide-react";
@@ -258,13 +259,13 @@ export default function TeacherForm({ initialData = null, isEdit = false }) {
                         {formData.image && (
                             <div className="pt-2 flex items-center gap-4">
                                 <div className="h-20 w-20 rounded-full overflow-hidden border-2 border-slate-300 bg-slate-200 flex items-center justify-center shrink-0">
-                                    <img
+                                    <Image
                                         src={formData.image}
                                         alt="Avatar preview"
-                                        className="h-full w-full object-cover"
-                                        onError={(e) => {
-                                            e.currentTarget.style.display = "none";
-                                        }}
+                                        width={80}
+                                        height={80}
+                                        className="object-cover"
+                                        unoptimized
                                     />
                                 </div>
                                 <p className="text-xs text-slate-500">

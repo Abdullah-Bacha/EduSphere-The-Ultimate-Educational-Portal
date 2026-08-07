@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect";
 import NewsletterSubscriber from "@/models/NewsletterSubscriber";
 import { rateLimit } from "@/lib/rateLimiter";
-import { validateEmail, handleApiError } from "@/lib/apiError";
-import { ValidationError } from "@/lib/apiError";
+import { handleApiError, ValidationError } from "@/lib/apiError";
+import { validateEmail } from "@/validations/commonValidation";
 
 export async function POST(request) {
     try {
