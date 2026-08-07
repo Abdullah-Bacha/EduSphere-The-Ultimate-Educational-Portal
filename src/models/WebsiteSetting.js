@@ -4,7 +4,7 @@ const WebsiteSettingSchema = new mongoose.Schema(
     {
         siteName: {
             type: String,
-            default: "EduLMS",
+            default: "EduSphere",
         },
 
         heroBadge: {
@@ -110,7 +110,7 @@ const WebsiteSettingSchema = new mongoose.Schema(
 
         contactEmail: {
             type: String,
-            default: "contact@edulms.com",
+            default: "contact@edusphere.com",
         },
 
         contactPhone: {

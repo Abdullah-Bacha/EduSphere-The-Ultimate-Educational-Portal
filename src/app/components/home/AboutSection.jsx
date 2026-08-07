@@ -80,6 +80,7 @@ export default function AboutSection() {
                                     <div className="text-2xl font-bold">50K+</div>
                                     <div className="text-xs mt-1 text-blue-100">Happy Students</div>
                                 </div>
+                                {/* <div classname="delete"> */}
                             </div>
                         </div>
 

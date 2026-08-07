@@ -37,7 +37,7 @@ export default async function HeroSection() {
                     <div className="space-y-6">
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 border border-blue-200">
                             <span className="inline-block w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
-                            <span className="text-xs font-semibold text-blue-600">Welcome to EduLMS</span>
+                            <span className="text-xs font-semibold text-blue-600">Welcome to EduSphere</span>
                         </div>
 
                         <div className="space-y-6">
