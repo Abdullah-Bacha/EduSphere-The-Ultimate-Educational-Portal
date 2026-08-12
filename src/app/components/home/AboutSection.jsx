@@ -3,7 +3,23 @@ import Container from "../ui/Container";
 import Link from "next/link";
 import { CheckCircle2, Lock, Star, Award, Users } from "lucide-react";
 import { Video, BookOpen, Clock, Headphones } from "lucide-react";
-export default function AboutSection() {
+import { getWebsiteSettings } from "@/services/websiteSettingService";
+
+function renderTitle(title) {
+    const words = title.trim().split(" ");
+    if (words.length <= 2) return <span className="text-blue-600">{title}</span>;
+    const highlight = words.slice(-2).join(" ");
+    const rest = words.slice(0, -2).join(" ");
+    return (
+        <>
+            {rest} <span className="text-blue-600">{highlight}</span>
+        </>
+    );
+}
+
+export default async function AboutSection() {
+    const settings = await getWebsiteSettings();
+
     return (
         <section className="py-16 bg-white">
             <Container>
@@ -104,42 +120,23 @@ export default function AboutSection() {
                         </span>
 
                         <h2 className="mt-4 text-3xl lg:text-4xl font-bold text-black leading-tight">
-                            Empowering Students Through <span className="text-blue-600">Modern Education</span>
+                            {renderTitle(settings.aboutTitle)}
                         </h2>
 
                         <p className="mt-4 text-gray-600 leading-relaxed text-sm">
-                            Our Learning Management System is a modern, flexible, and interactive platform designed to provide high-quality education to students worldwide. We believe in accessible, practical education that prepares students for real-world challenges.
+                            {settings.aboutDescription}
                         </p>
 
                         {/* Checklist */}
                         <div className="mt-6 space-y-3">
-                            <div className="flex items-center gap-3">
-                                <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                                    <CheckCircle2 size={16} className="text-blue-600" />
+                            {settings.aboutFeatures.map((feature) => (
+                                <div key={feature} className="flex items-center gap-3">
+                                    <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                        <CheckCircle2 size={16} className="text-blue-600" />
+                                    </div>
+                                    <span className="text-gray-700 font-medium text-sm">{feature}</span>
                                 </div>
-                                <span className="text-gray-700 font-medium text-sm">Experienced Faculty Members</span>
-                            </div>
-
-                            <div className="flex items-center gap-3">
-                                <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                                    <CheckCircle2 size={16} className="text-blue-600" />
-                                </div>
-                                <span className="text-gray-700 font-medium text-sm">Industry-Oriented Courses</span>
-                            </div>
-
-                            <div className="flex items-center gap-3">
-                                <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                                    <CheckCircle2 size={16} className="text-blue-600" />
-                                </div>
-                                <span className="text-gray-700 font-medium text-sm">Online Learning Platform</span>
-                            </div>
-
-                            <div className="flex items-center gap-3">
-                                <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                                    <CheckCircle2 size={16} className="text-blue-600" />
-                                </div>
-                                <span className="text-gray-700 font-medium text-sm">International Certifications</span>
-                            </div>
+                            ))}
                         </div>
 
                         {/* Learn More Button */}

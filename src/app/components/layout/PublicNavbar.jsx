@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import MobileMenu from "./MobileMenu";
 
-export default function PublicNavbar() {
+export default function PublicNavbar({ siteName = "LMS University", siteTagline = "Learning Management System", siteLogo = "" }) {
     const pathname = usePathname();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -24,17 +24,21 @@ export default function PublicNavbar() {
 
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md">
-                        <GraduationCap size={24} />
+                    <div className="w-11 h-11 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md overflow-hidden">
+                        {siteLogo ? (
+                            <img src={siteLogo} alt={siteName} className="w-full h-full object-cover" />
+                        ) : (
+                            <GraduationCap size={24} />
+                        )}
                     </div>
 
                     <div>
                         <h1 className="text-2xl font-bold text-slate-900">
-                            EduSphere
+                            {siteName}
                         </h1>
 
                         <p className="text-xs text-slate-500">
-                            Learning Management System
+                            {siteTagline}
                         </p>
                     </div>
                 </Link>

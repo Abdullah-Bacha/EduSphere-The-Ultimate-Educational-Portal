@@ -1,4 +1,12 @@
 import CoursesCatalog from "./CoursesCatalog";
+import FeaturedCourseBanner from "@/app/components/courses/FeaturedCourseBanner";
+import CourseBenefits from "@/app/components/courses/CourseBenefits";
+import CoursesPricing from "@/app/components/courses/CoursesPricing";
+import FAQSection from "@/app/components/home/FAQSection";
+import CTASection from "@/app/components/home/CTASection";
+import FooterSection from "@/app/components/home/FooterSection";
+import { GraduationCap, BookOpen } from "lucide-react";
+import { getWebsiteSettings } from "@/services/websiteSettingService";
 
 export const metadata = {
     title: "Courses",
@@ -6,28 +14,39 @@ export const metadata = {
         "Browse professional courses at LMS University, taught by experienced instructors across web development, programming, and more.",
 };
 
-export default function CoursesPage() {
+export default async function CoursesPage() {
+    const settings = await getWebsiteSettings();
+
     return (
-        <main className="pt-20">
-
-            <section className="bg-blue-600 text-white py-24">
-
-                <div className="max-w-7xl mx-auto px-6 text-center">
-
-                    <h1 className="text-5xl lg:text-6xl font-bold">
-                        Our Courses
-                    </h1>
-
-                    <p className="mt-6 text-white/70 max-w-2xl mx-auto leading-relaxed text-lg">
-                        Explore our professional courses designed to help you build real-world skills and achieve your career goals.
-                    </p>
-
-                </div>
-
-            </section>
-
+        <main>
             <CoursesCatalog />
 
+            <FeaturedCourseBanner />
+
+            <CourseBenefits />
+
+            <CoursesPricing />
+
+            <FAQSection
+                badge="Frequently Asked Questions"
+                title="Questions? We're Here to Help."
+                description="Everything you need to know before you get started."
+                faqs={settings.faqs}
+            />
+
+            <CTASection
+                badge="Start Now"
+                title="Start Learning Today"
+                description="Choose a course, build practical skills, and take the next step toward your career."
+                primaryHref="/courses"
+                primaryLabel="Explore Courses"
+                primaryIcon={BookOpen}
+                secondaryHref="/register"
+                secondaryLabel="Join LMS University"
+                secondaryIcon={GraduationCap}
+            />
+
+            <FooterSection />
         </main>
     );
 }

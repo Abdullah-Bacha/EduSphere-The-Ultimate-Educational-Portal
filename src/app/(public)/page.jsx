@@ -7,6 +7,7 @@ import AboutSection from "../components/home/AboutSection";
 import WhyChooseUs from "../components/home/WhyChooseUs";
 import FeaturedCourses from "../components/home/FeaturedCourses";
 import FeaturedTeachers from "../components/home/FeaturedTeachers";
+import { getWebsiteSettings } from "@/services/websiteSettingService";
 
 export const dynamic = 'force-dynamic';
 
@@ -16,7 +17,9 @@ export const metadata = {
     "Learn today, lead tomorrow. Explore expert-led courses and grow your skills with LMS University's modern learning platform.",
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const settings = await getWebsiteSettings();
+
   return (
     <>
       <HeroSection />
@@ -33,7 +36,7 @@ export default function HomePage() {
 
       <TestimonialsSection />
 
-      <CTASection />
+      <CTASection title={settings.ctaTitle} description={settings.ctaDescription} />
 
       <FooterSection />
     </>

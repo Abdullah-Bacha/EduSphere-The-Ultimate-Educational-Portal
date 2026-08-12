@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import Container from "../ui/Container";
 
-const faqs = [
+const defaultFaqs = [
     {
         question: "How do I enroll in a course?",
         answer:
@@ -57,22 +57,27 @@ function FAQItem({ faq, isOpen, onToggle }) {
     );
 }
 
-export default function FAQSection() {
+export default function FAQSection({
+    badge = "FAQ",
+    title = "Frequently Asked Questions",
+    description = "Everything you need to know before you get started.",
+    faqs = defaultFaqs,
+}) {
     const [openIndex, setOpenIndex] = useState(0);
 
     return (
-        <section className="py-24 bg-white">
+        <section id="faq" className="py-24 bg-white">
             <Container className="max-w-3xl">
                 <div className="text-center mb-16">
                     <div className="inline-flex items-center justify-center gap-2 mb-4 bg-blue-100 px-4 py-2 rounded-full border border-blue-200">
                         <span className="inline-block w-2 h-2 bg-blue-600 rounded-full"></span>
-                        <span className="text-blue-600 font-semibold text-xs uppercase tracking-widest">FAQ</span>
+                        <span className="text-blue-600 font-semibold text-xs uppercase tracking-widest">{badge}</span>
                     </div>
                     <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mt-4 mb-6">
-                        Frequently Asked Questions
+                        {title}
                     </h2>
                     <p className="text-gray-600 text-base leading-relaxed">
-                        Everything you need to know before you get started.
+                        {description}
                     </p>
                 </div>
 

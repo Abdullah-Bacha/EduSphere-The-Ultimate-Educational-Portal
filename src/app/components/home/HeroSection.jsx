@@ -5,6 +5,7 @@ import Image from "next/image";
 import User from "@/models/User";
 import Course from "@/models/Course";
 import dbConnect from "@/lib/dbConnect";
+import { getWebsiteSettings } from "@/services/websiteSettingService";
 
 async function getHeroStats() {
     await dbConnect();
@@ -18,8 +19,22 @@ async function getHeroStats() {
     return { students, teachers, courses };
 }
 
+function renderHeading(title, highlight) {
+    if (highlight && title.includes(highlight)) {
+        const [before, after] = title.split(highlight);
+        return (
+            <>
+                {before}
+                <span className="text-blue-600">{highlight}</span>
+                {after}
+            </>
+        );
+    }
+    return title;
+}
+
 export default async function HeroSection() {
-    const stats = await getHeroStats();
+    const [stats, settings] = await Promise.all([getHeroStats(), getWebsiteSettings()]);
 
     return (
         <section className="relative overflow-hidden pt-20 pb-32 lg:pt-1 lg:pb-14" style={{ background: "linear-gradient(135deg, #e8eef8 0%, #f0e8f8 50%, #e8f4f8 100%)" }}>
@@ -37,15 +52,15 @@ export default async function HeroSection() {
                     <div className="space-y-6">
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 border border-blue-200">
                             <span className="inline-block w-1.5 h-1.5 bg-blue-600 rounded-full"></span>
-                            <span className="text-xs font-semibold text-blue-600">Welcome to EduSphere</span>
+                            <span className="text-xs font-semibold text-blue-600">{settings.heroBadge}</span>
                         </div>
 
                         <div className="space-y-6">
                             <h1 className="text-5xl lg:text-5xl font-black leading-tight">
-                                Learn Today, <span className="text-blue-600">Lead Tomorrow</span>
+                                {renderHeading(settings.heroTitle, settings.heroHighlight)}
                             </h1>
                             <p className="text-base text-gray-600 leading-relaxed max-w-md">
-                                Join thousands of students learning through our modern Learning Management System. Expert instructors, practical courses, and industry-ready skills await you.
+                                {settings.heroDescription}
                             </p>
                         </div>
 
@@ -84,7 +99,7 @@ export default async function HeroSection() {
                     <div className="relative hidden lg:block h-full min-h-[500px]">
                         <div className="relative w-full h-full flex items-center justify-center">
                             <Image
-                                src="/images/Students learning.png"
+                                src={settings.heroImage || "/images/Students learning.png"}
                                 alt="Student Learning"
                                 width={350}
                                 height={400}

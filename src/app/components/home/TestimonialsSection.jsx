@@ -76,7 +76,7 @@ export default async function TestimonialsSection() {
 
                             <p className="text-[var(--text-secondary)] mt-5 leading-7 text-sm">
 
-                                &quot;{item.content}&quot;
+                                &quot;{item.message}&quot;
 
                             </p>
 

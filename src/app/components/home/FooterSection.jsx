@@ -10,8 +10,11 @@ import {
 } from "react-icons/fa6";
 
 import NewsletterForm from "./NewsletterForm";
+import { getWebsiteSettings } from "@/services/websiteSettingService";
 
-export default function FooterSection() {
+export default async function FooterSection() {
+    const settings = await getWebsiteSettings();
+
     return (
         <footer className="bg-[var(--sidebar-bg)] text-white">
 
@@ -24,14 +27,12 @@ export default function FooterSection() {
                     <div>
 
                         <h2 className="text-3xl font-bold text-[var(--accent)]">
-                            LMS University
+                            {settings.siteName}
                         </h2>
 
                         <p className="mt-5 text-white/60 leading-7">
 
-                            A modern learning management system designed to
-                            provide quality education with experienced teachers
-                            and professional courses.
+                            {settings.footerDescription}
 
                         </p>
 
@@ -77,7 +78,7 @@ export default function FooterSection() {
 
                                 <Phone size={18} />
 
-                                +92 300 1234567
+                                {settings.contactPhone}
 
                             </li>
 
@@ -85,7 +86,7 @@ export default function FooterSection() {
 
                                 <Mail size={18} />
 
-                                info@lmsuniversity.com
+                                {settings.contactEmail}
 
                             </li>
 
@@ -93,7 +94,7 @@ export default function FooterSection() {
 
                                 <MapPin size={18} />
 
-                                Takht Bhai, Mardan, Pakistan
+                                {settings.contactAddress}
 
                             </li>
 
@@ -114,29 +115,35 @@ export default function FooterSection() {
     <div className="flex gap-4">
 
         <a
-            href="#"
+            href={settings.socialFacebook || "#"}
+            target={settings.socialFacebook ? "_blank" : undefined}
+            rel="noopener noreferrer"
             className="w-11 h-11 rounded-full bg-blue-600 hover:bg-blue-700 transition flex items-center justify-center"
         >
             <FaFacebookF />
         </a>
 
         <a
-            href="#"
+            href={settings.socialInstagram || "#"}
+            target={settings.socialInstagram ? "_blank" : undefined}
+            rel="noopener noreferrer"
             className="w-11 h-11 rounded-full bg-pink-600 hover:bg-pink-700 transition flex items-center justify-center"
         >
             <FaInstagram />
         </a>
 
         <a
-            href="#"
+            href={settings.socialTwitter || "#"}
+            target={settings.socialTwitter ? "_blank" : undefined}
+            rel="noopener noreferrer"
             className="w-11 h-11 rounded-full bg-black hover:bg-gray-800 transition flex items-center justify-center"
         >
             <FaXTwitter />
         </a>
 
         <a
-            href="https://linkedin.com/in/abdullah-bacha"
-            target="_blank"
+            href={settings.socialLinkedin || "#"}
+            target={settings.socialLinkedin ? "_blank" : undefined}
             rel="noopener noreferrer"
             className="w-11 h-11 rounded-full bg-blue-800 hover:bg-blue-900 transition flex items-center justify-center"
         >
@@ -155,7 +162,7 @@ export default function FooterSection() {
                 <div className="border-t border-slate-700 mt-16 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center text-gray-400">
 
                     <p>
-                        © {new Date().getFullYear()} LMS University.
+                        © {new Date().getFullYear()} {settings.siteName}.
                         All Rights Reserved.
                     </p>
 

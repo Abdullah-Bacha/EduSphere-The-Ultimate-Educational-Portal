@@ -25,6 +25,7 @@ import {
     BarChart3,
     MessageSquare,
     MessageSquareQuote,
+    Globe,
 } from "lucide-react";
 
 export const publicNavigation = [
@@ -119,6 +120,7 @@ export const adminNavigation = [
     { name: "Teachers", href: "/dashboard/teachers", icon: GraduationCap },
     { name: "Courses", href: "/dashboard/courses", icon: BookOpen },
     { name: "Categories", href: "/dashboard/admin/categories", icon: FolderOpen },
+    { name: "Website Settings", href: "/dashboard/admin/website-settings", icon: Globe },
     { name: "Announcements", href: "/dashboard/admin/announcements", icon: Bell },
     { name: "Search", href: "/dashboard/admin/search", icon: Search },
     { name: "Certificates", href: "/dashboard/admin/certificates", icon: Award },

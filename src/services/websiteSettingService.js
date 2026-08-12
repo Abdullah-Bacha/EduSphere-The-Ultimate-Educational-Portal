@@ -3,20 +3,20 @@ import WebsiteSetting from "@/models/WebsiteSetting";
 
 const DEFAULT_SETTINGS = {};
 
+function serialize(doc) {
+    return JSON.parse(JSON.stringify(doc.toObject()));
+}
+
 export async function getWebsiteSettings() {
     await dbConnect();
 
-    let settings = await WebsiteSetting.findOne().lean();
+    let settings = await WebsiteSetting.findOne();
 
     if (!settings) {
         settings = await WebsiteSetting.create(DEFAULT_SETTINGS);
-        settings = settings.toObject();
     }
 
-    return {
-        ...settings,
-        _id: String(settings._id),
-    };
+    return serialize(settings);
 }
 
 export async function updateWebsiteSettings(data) {
@@ -32,5 +32,5 @@ export async function updateWebsiteSettings(data) {
         }
     );
 
-    return settings.toObject();
+    return serialize(settings);
 }

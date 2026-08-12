@@ -1,4 +1,10 @@
-import FeaturedTeachers from "@/app/components/home/FeaturedTeachers";
+import TeacherDirectory from "@/app/components/teachers/TeacherDirectory";
+import WhyOurTeachers from "@/app/components/teachers/WhyOurTeachers";
+import StatisticsSection from "@/app/components/home/StatisticsSection";
+import CTASection from "@/app/components/home/CTASection";
+import FooterSection from "@/app/components/home/FooterSection";
+import { getTeachersWithStats } from "@/services/teacherService";
+import { BookOpen, Users } from "lucide-react";
 
 export const metadata = {
     title: "Teachers",
@@ -6,28 +12,31 @@ export const metadata = {
         "Meet the experienced, dedicated teachers at LMS University who help students master in-demand skills.",
 };
 
-export default function TeachersPage() {
+export default async function TeachersPage() {
+    const teachers = await getTeachersWithStats();
+
     return (
-        <main className="pt-20">
+        <main>
+            <TeacherDirectory teachers={teachers} />
 
-            <section className="bg-blue-600 text-white py-24">
+            <StatisticsSection />
 
-                <div className="max-w-7xl mx-auto px-6 text-center">
+            <WhyOurTeachers />
 
-                    <h1 className="text-5xl lg:text-6xl font-bold">
-                        Our Teachers
-                    </h1>
+            <CTASection
+                badge="Join Us"
+                title="Learn From the Best"
+                description="Join thousands of learners and start building practical skills with experienced instructors at LMS University."
+                primaryHref="/courses"
+                primaryLabel="Explore Courses"
+                primaryIcon={BookOpen}
+                secondaryHref="/teachers"
+                secondaryLabel="Meet Our Teachers"
+                secondaryIcon={Users}
+                background="bg-gradient-to-br from-slate-900 via-blue-950 to-indigo-950"
+            />
 
-                    <p className="mt-6 text-white/70 max-w-2xl mx-auto leading-relaxed text-lg">
-                        Meet our experienced teachers who are dedicated to providing quality education and practical learning.
-                    </p>
-
-                </div>
-
-            </section>
-
-            <FeaturedTeachers />
-
+            <FooterSection />
         </main>
     );
 }
