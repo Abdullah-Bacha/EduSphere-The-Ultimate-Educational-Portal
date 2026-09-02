@@ -184,7 +184,7 @@ export async function getCourseById(id) {
 
 
 
-**API Error Handling Pattern:**
+**API Error Handling Patterns:**
 ```javascript
 export async function POST(request) {
     try {
