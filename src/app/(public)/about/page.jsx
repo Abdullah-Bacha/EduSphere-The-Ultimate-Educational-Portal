@@ -89,7 +89,7 @@ export default async function AboutPage() {
 
             <section className="py-22 bg-[var(--bg-main)]">
                 <Container>
-                    <div className="grid lg:grid-cols-2 gap-16 items-start">
+                    <div className="grid lg:grid-cols-2 gap-14 items-start">
                         <div>
                             <span className="inline-block bg-blue-100 text-blue-600 px-4 py-2 rounded-full text-sm font-semibold">
                                 Our Story
