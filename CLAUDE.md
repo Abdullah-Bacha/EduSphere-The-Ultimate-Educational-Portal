@@ -180,14 +180,9 @@ export async function getCourseById(id) {
 **Path Aliases:**
 - `@/*` → `src/*` (e.g., `@/models/User`, `@/services/courseService`)
 
-## Validation & Error Handling
 
-**Validation Pattern:**
-```javascript
-// src/validations/courseValidation.js exports:
-// - validateCoursePayload(data) → { valid: boolean, errors: [], payload: {...} }
-// - normalizeCoursePayload(data) — sanitize & format input
-```
+
+
 
 **API Error Handling Pattern:**
 ```javascript

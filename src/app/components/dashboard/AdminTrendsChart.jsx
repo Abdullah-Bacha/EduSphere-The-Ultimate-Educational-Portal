@@ -21,6 +21,7 @@ export default function AdminTrendsChart() {
             .finally(() => setLoading(false));
     }, []);
 
+  
     return (
         <div className="rounded-[26px] border border-white/10 bg-[#0b1220]/95 p-6 shadow-[0_24px_80px_-34px_rgba(2,8,23,0.94)]">
             <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
